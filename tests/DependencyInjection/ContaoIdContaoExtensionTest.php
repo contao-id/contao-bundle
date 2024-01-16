@@ -18,6 +18,6 @@ class ContaoIdContaoExtensionTest extends TestCase
         $extension->load([], $containerBuilder);
         $definitions = array_keys($containerBuilder->getDefinitions());
 
-        self::assertCount(1, $definitions);
+        self::assertGreaterThan(1, $definitions);
     }
 }

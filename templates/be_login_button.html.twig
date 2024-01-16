@@ -1,0 +1,47 @@
+<div class="oauth-container">
+    <div class="oauth-separator">oder</div>
+
+    <a href="{{ path('hwi_oauth_service_redirect', {'service': 'contao_id' }) }}" class="tl_submit oauth-button">
+        <img alt="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAC40lEQVRYhc2WTUiUQRjHx6RzRRhRnSKqW7ZLQoYHSxLd3Rm/JYLoA3VGoQ51ES8lVJ6qY93KLHxn16Va3ffdlHaeWRVKwtpLgXkpI8hDWWj5sTsdtlX3G9e1t4HnNPD8fu9/nhlehHK4hpoq9wvquAUUB4HiWaBkHiieBIrvC2YrySUrZvH6+nygjpvAyAIwooARJSieAorfAcVhYEQBxWGgxOU/W7V1zYBun2+HZohSzSurNMNf1uP171mBo3xBsTMKBkaUpNhzr9m6GSGEBHNcW70HFAcDzLYtI1QplacZ0MANOcINGeKGVKsqzI3AONfhgmit6owBRCCno30CzLY3fl9Q7EkfqVcWaIYcjIMmlMvdr6CtJpwAYPhhtBcwe1sSwbBoclSkjluX7zPBuSFV/50uldB8BTImGB4ERkIp9p8kjZ0bcigOtKjp0KMZ0KB5XxzjuqjWfIG73Cfnnne0phbIUIKS7wqhvBgBTRen4uBfHnlkUbKkHnv8B8WlxplsBYDi8MszJ7bHCcCrZbhPLvTq4ki6WQGGJ7IWYETJcxUFK4M34N8Zme6IQK8uu9PBEULo7xlnm8APdRVtWm7W64WTq+PXBmRtJgHZgtuzngHmeBbTjHtlXcz56+JoJoHh83gXMDKXlUSLvXLdAgghBJR0rP0GJHmIshXg3LPb6LyyFvibhKdYccu+n33lT7+669S0u1ZNu2vVvLM4qJyWkUy15Coam+6rVpNdpUq24rTXDijWBpvLtsTBCwuV0zqjXFa13pp9UKTG28uTwT9Ck604aYTKZRnKBTxaH24cTyJARlOeoXJZfpsskDv4fysgGQ6YJxCZ/ssmJoCnUsL/TQLkk7kCjCwK6rhu6hCafguA4REzBWahxd5oogD+BhQfTiewtPEzgCGNgOXtRgsI6hhILeA8VKNcllCuBD7fLon/+uGEf4AUEsH1H4clFObWidGLdg9Q/Asofj3M8IF07D+Ff9G9XXw5/AAAAABJRU5ErkJggg==">
+
+        contao.id
+    </a>
+</div>
+
+<style>
+    .oauth-container {
+        margin-top:20px;
+        text-align: center
+    }
+
+    .oauth-separator {
+        display: flex;
+        align-items: center;
+        margin: 2rem 0;
+        font-size: 0.8rem;
+        line-height: 1.6;
+        height: 1px;
+        color: #444;
+    }
+
+    .oauth-separator::before,
+    .oauth-separator::after {
+        flex: 1 1 auto;
+        height: 1px;
+        background-color: #aaa;
+    }
+
+    .oauth-separator::before {
+        content: "";
+        margin-right: .5rem;
+    }
+
+    .oauth-separator::after {
+        content: "";
+        margin-left: .5rem;
+    }
+
+    .oauth-button img {
+        max-height: 100%;
+    }
+</style>

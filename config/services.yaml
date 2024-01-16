@@ -1,1 +1,9 @@
 services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    ContaoId\ContaoBundle\:
+        resource: '../src/*'
+        exclude: '../src/{ContaoManager,DependencyInjection}'
