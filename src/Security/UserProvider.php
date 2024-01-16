@@ -15,13 +15,10 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 class UserProvider implements UserProviderInterface, OAuthAwareUserProviderInterface
 {
-    private ContaoFramework $framework;
-    private Connection $connection;
-
-    public function __construct(ContaoFramework $framework, Connection $connection)
-    {
-        $this->framework = $framework;
-        $this->connection = $connection;
+    public function __construct(
+        private readonly ContaoFramework $framework,
+        private readonly Connection $connection,
+    ) {
     }
 
     public function loadUserByUsername(string $username): UserInterface
