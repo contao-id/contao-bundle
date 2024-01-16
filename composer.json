@@ -29,10 +29,13 @@
         "php": "^8.1",
         "contao/core-bundle": "^4.13",
         "contao/manager-plugin": "^2.3.1",
+        "doctrine/dbal": "^3.7",
         "hwi/oauth-bundle": "^2.1",
         "symfony/config": "^5.4 || ^6.0",
         "symfony/dependency-injection": "^5.4 || ^6.0",
-        "symfony/http-kernel": "^5.4 || ^6.0"
+        "symfony/http-kernel": "^5.4 || ^6.0",
+        "symfony/security-core": "^5.4 || ^6.0",
+        "twig/twig": "^3.8"
     },
     "require-dev": {
         "bamarni/composer-bin-plugin": "^1.4"
