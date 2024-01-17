@@ -35,7 +35,6 @@ class CheckUserActionsListener
         }
 
         $id = $request->get('id');
-
         $user = $this->connection->executeQuery('SELECT * FROM tl_user WHERE id = :id', ['id' => $id])->fetchAssociative();
 
         if (false === $user) {
