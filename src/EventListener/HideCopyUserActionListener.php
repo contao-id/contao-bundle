@@ -6,6 +6,7 @@ namespace ContaoId\ContaoBundle\EventListener;
 
 use Contao\CoreBundle\DependencyInjection\Attribute\AsCallback;
 use Contao\DataContainer;
+use Contao\System;
 
 #[AsCallback(table: 'tl_user', target: 'list.operations.copy.button')]
 class HideCopyUserActionListener
@@ -29,6 +30,9 @@ class HideCopyUserActionListener
             return '';
         }
 
-        return (new \tl_user())->copyUser($row, (string) $href, $label, $title, (string) $icon, $attributes, $table);
+        /** @var \tl_user $tlUser */
+        $tlUser = System::importStatic('tl_user');
+
+        return $tlUser->copyUser($row, (string) $href, $label, $title, (string) $icon, $attributes, $table);
     }
 }

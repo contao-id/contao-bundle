@@ -6,6 +6,7 @@ namespace ContaoId\ContaoBundle\EventListener;
 
 use Contao\CoreBundle\DependencyInjection\Attribute\AsCallback;
 use Contao\DataContainer;
+use Contao\System;
 
 #[AsCallback(table: 'tl_user', target: 'list.operations.toggle.button')]
 class HideToggleUserActionListener
@@ -29,6 +30,9 @@ class HideToggleUserActionListener
             return '';
         }
 
-        return (new \tl_user())->toggleIcon($row, (string) $href, $label, $title, (string) $icon, $attributes);
+        /** @var \tl_user $tlUser */
+        $tlUser = System::importStatic('tl_user');
+
+        return $tlUser->toggleIcon($row, (string) $href, $label, $title, (string) $icon, $attributes);
     }
 }

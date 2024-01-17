@@ -47,7 +47,6 @@ class UserProvider implements UserProviderInterface, OAuthAwareUserProviderInter
     public function loadUserByOAuthUserResponse(UserResponseInterface $response): UserInterface
     {
         $this->framework->initialize();
-
         $data = $response->getData();
 
         $mail = $data['email'];
