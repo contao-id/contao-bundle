@@ -15,7 +15,7 @@ class HideUserActionsListener
 {
     public function __invoke(array $row, ?string $href, string $label, string $title, ?string $icon, string $attributes): string
     {
-        if ($row['contaoIdRemoteId']) {
+        if ($row['contaoIdRemoteId'] ?? null) {
             return '';
         }
 

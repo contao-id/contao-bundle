@@ -23,7 +23,7 @@ class UserIconListener
         $tlUser = System::importStatic('tl_user');
         $labels = $tlUser->addIcon($row, $label, $dataContainer, $labels);
 
-        if (!$row['contaoIdRemoteId']) {
+        if (!($row['contaoIdRemoteId'] ?? null)) {
             return $labels;
         }
 
