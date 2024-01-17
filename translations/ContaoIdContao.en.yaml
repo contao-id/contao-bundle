@@ -1,0 +1,3 @@
+login:
+    separator: 'or'
+    button: 'Login with contao.id'
