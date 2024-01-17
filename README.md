@@ -50,7 +50,7 @@ ContaoId\ContaoBundle\ContaoIdContaoBundle::class => ['all' => true],
 ## `config/config.yaml`
 
 ```
-# Auth
+# Contao ID
 contao_id_identifier: 1234
 contao_id_secret: 12345678
 ```
