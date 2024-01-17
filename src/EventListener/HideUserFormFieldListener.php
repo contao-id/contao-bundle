@@ -34,25 +34,25 @@ class HideUserFormFieldListener
             return;
         }
 
-        foreach ($GLOBALS['TL_DCA']['tl_user']['palettes'] as $key => $palette) {
-            if (!\is_string($palette)) {
+        foreach ($GLOBALS['TL_DCA']['tl_user']['palettes'] as $palette => $fields) {
+            if (!\is_string($fields)) {
                 continue;
             }
 
-            $this->removeFieldsFromPalette($key, ['password', 'pwChange', 'admin', 'disable', 'start', 'stop']);
+            $this->removeFieldsFromPalette($palette, ['password', 'pwChange', 'admin', 'disable', 'start', 'stop']);
         }
 
-        $GLOBALS['TL_DCA']['tl_user']['fields']['username']['eval']['readonly'] = true;
-        $GLOBALS['TL_DCA']['tl_user']['fields']['name']['eval']['readonly'] = true;
-        $GLOBALS['TL_DCA']['tl_user']['fields']['email']['eval']['readonly'] = true;
+        foreach (['username', 'name', 'email'] as $field) {
+            $GLOBALS['TL_DCA']['tl_user']['fields'][$field]['eval']['readonly'] = true;
+        }
     }
 
-    private function removeFieldsFromPalette(string $paletteKey, array $fields): void
+    private function removeFieldsFromPalette(string $palette, array $fields): void
     {
         foreach ($fields as $field) {
             PaletteManipulator::create()
                 ->removeField($field)
-                ->applyToPalette($paletteKey, 'tl_user')
+                ->applyToPalette($palette, 'tl_user')
             ;
         }
     }
