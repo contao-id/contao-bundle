@@ -24,7 +24,7 @@ class UserIconListener
         $labels = $tlUser->addIcon($row, $label, $dataContainer, $labels);
 
         $labels[0] = $this->twig->render('@ContaoIdContao/user_icon.html.twig', [
-            'isAdmin' => !!$row['admin'],
+            'isAdmin' => (bool) $row['admin'],
         ]);
 
         return $labels;
