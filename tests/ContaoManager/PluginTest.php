@@ -9,6 +9,7 @@ use Contao\ManagerPlugin\Bundle\Config\BundleConfig;
 use Contao\ManagerPlugin\Bundle\Parser\ParserInterface;
 use ContaoId\ContaoBundle\ContaoIdContaoBundle;
 use ContaoId\ContaoBundle\ContaoManager\Plugin;
+use HWI\Bundle\OAuthBundle\HWIOAuthBundle;
 use PHPUnit\Framework\TestCase;
 
 class PluginTest extends TestCase
@@ -25,6 +26,6 @@ class PluginTest extends TestCase
         $config = $bundles[0];
 
         self::assertSame(ContaoIdContaoBundle::class, $config->getName());
-        self::assertSame([ContaoCoreBundle::class], $config->getLoadAfter());
+        self::assertSame([ContaoCoreBundle::class, HWIOAuthBundle::class], $config->getLoadAfter());
     }
 }
