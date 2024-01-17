@@ -3,8 +3,8 @@ name: CI
 on: push
 
 jobs:
-    check-backend-codestyle:
-        name: Check backend code-style
+    check-codestyle:
+        name: Check code-style
         runs-on: ubuntu-latest
         steps:
             -   name: Checkout
