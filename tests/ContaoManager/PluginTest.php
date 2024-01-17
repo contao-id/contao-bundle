@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Oneup\ContaoBackendSortableListViewsBundle\Tests\ContaoManager;
+namespace ContaoId\ContaoBundle\Tests\ContaoManager;
 
 use Contao\CoreBundle\ContaoCoreBundle;
 use Contao\ManagerPlugin\Bundle\Config\BundleConfig;

@@ -24,7 +24,7 @@ class ButtonInjectionListener
         $buttons = $this->twig->render('@ContaoIdContao/be_login_button.html.twig');
         $buttons .= '</div></form></main>';
 
-        $buffer = preg_replace('/\<\/div\>(\s*)\<\/form\>(\s*)\<\/main\>/', $buttons, $buffer);
+        $buffer = preg_replace('/<\/div>(\s*)<\/form>(\s*)<\/main>/', $buttons, $buffer);
 
         return (string) $buffer;
     }

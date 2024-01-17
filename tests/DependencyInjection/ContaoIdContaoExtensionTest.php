@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Oneup\ContaoBackendSortableListViewsBundle\Tests\DependencyInjection;
+namespace ContaoId\ContaoBundle\Tests\DependencyInjection;
 
 use ContaoId\ContaoBundle\DependencyInjection\ContaoIdContaoExtension;
 use PHPUnit\Framework\TestCase;
