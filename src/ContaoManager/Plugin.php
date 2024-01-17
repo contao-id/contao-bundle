@@ -10,6 +10,7 @@ use Contao\ManagerPlugin\Bundle\Config\BundleConfig;
 use Contao\ManagerPlugin\Bundle\Parser\ParserInterface;
 use Contao\ManagerPlugin\Routing\RoutingPluginInterface;
 use ContaoId\ContaoBundle\ContaoIdContaoBundle;
+use HWI\Bundle\OAuthBundle\HWIOAuthBundle;
 use Symfony\Component\Config\Loader\LoaderResolverInterface;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Routing\RouteCollection;
@@ -22,6 +23,7 @@ final class Plugin implements BundlePluginInterface, RoutingPluginInterface
             BundleConfig::create(ContaoIdContaoBundle::class)
                 ->setLoadAfter([
                     ContaoCoreBundle::class,
+                    HWIOAuthBundle::class,
                 ]),
         ];
     }
