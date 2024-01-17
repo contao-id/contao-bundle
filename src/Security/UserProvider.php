@@ -99,6 +99,7 @@ class UserProvider implements UserProviderInterface, OAuthAwareUserProviderInter
                 'tstamp' => time(),
                 'lastLogin' => time(),
                 'currentLogin' => time(),
+                'contaoIdRemoteId' => $data['id'],
             ]);
 
             $id = $this->connection->lastInsertId();
@@ -112,6 +113,7 @@ class UserProvider implements UserProviderInterface, OAuthAwareUserProviderInter
                 'tstamp' => time(),
                 'lastLogin' => time(),
                 'currentLogin' => time(),
+                'contaoIdRemoteId' => $data['id'],
             ], [
                 'id' => $id,
             ]);

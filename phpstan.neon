@@ -12,6 +12,8 @@ parameters:
     checkMissingIterableValueType: false
     reportUnmatchedIgnoredErrors: false
     universalObjectCratesClasses:
+        - Contao\UserModel
+
     ignoreErrors:
         -
             message: '#Cannot call method load\(\) on Symfony\\Component\\Config\\Loader\\LoaderInterface\|false#'

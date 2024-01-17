@@ -23,6 +23,10 @@ class UserIconListener
         $tlUser = System::importStatic('tl_user');
         $labels = $tlUser->addIcon($row, $label, $dataContainer, $labels);
 
+        if (!$row['contaoIdRemoteId']) {
+            return $labels;
+        }
+
         $labels[0] = $this->twig->render('@ContaoIdContao/user_icon.html.twig', [
             'isAdmin' => (bool) $row['admin'],
         ]);
