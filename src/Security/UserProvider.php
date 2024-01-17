@@ -6,6 +6,7 @@ namespace ContaoId\ContaoBundle\Security;
 
 use Contao\BackendUser;
 use Contao\CoreBundle\Framework\ContaoFramework;
+use Contao\User;
 use Doctrine\DBAL\Connection;
 use HWI\Bundle\OAuthBundle\OAuth\Response\UserResponseInterface;
 use HWI\Bundle\OAuthBundle\Security\Core\User\OAuthAwareUserProviderInterface;
@@ -13,6 +14,9 @@ use Symfony\Component\Security\Core\Exception\UserNotFoundException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
+/**
+ * @implements UserProviderInterface<User>
+ */
 class UserProvider implements UserProviderInterface, OAuthAwareUserProviderInterface
 {
     public function __construct(
