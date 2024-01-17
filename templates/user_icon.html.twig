@@ -1,0 +1,6 @@
+{% set path = '/bundles/contaoidcontao/' ~ (isAdmin ? 'admin' : 'user') ~ '.svg' %}
+{% set disabledPath = '/bundles/contaoidcontao/' ~ (isAdmin ? 'admin' : 'user') ~ '_.svg' %}
+
+<div class="list_icon_new" style="background-image:url({{ path }})"  data-icon="{{ path }}" data-icon-disabled="{{ disabledPath }}">
+    &nbsp;
+</div>
