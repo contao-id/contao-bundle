@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace ContaoId\ContaoBundle\Tests\EventListener;
 
-use ContaoId\ContaoBundle\DependencyInjection\ContaoIdContaoExtension;
 use ContaoId\ContaoBundle\EventListener\ButtonInjectionListener;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Twig\Environment;
 
 class ButtonInjectionListenerTest extends TestCase
@@ -32,6 +30,6 @@ class ButtonInjectionListenerTest extends TestCase
         $listener = new ButtonInjectionListener($twig);
         $appended = $listener($buffer, 'be_login');
 
-        $this->assertEquals($expectedBuffer, $appended);
+        $this->assertSame($expectedBuffer, $appended);
     }
 }
