@@ -1,9 +1,57 @@
 services:
     _defaults:
-        autowire: true
-        autoconfigure: true
+        autowire: false
+        autoconfigure: false
         public: false
 
-    ContaoId\ContaoBundle\:
-        resource: '../src/*'
-        exclude: '../src/{ContaoManager,DependencyInjection}'
+    contao_id_contao.contao_manager.plugin:
+        class: ContaoId\ContaoBundle\ContaoManager\Plugin
+
+    contao_id_contao.event_listener.button_injection_listener:
+        class: ContaoId\ContaoBundle\EventListener\ButtonInjectionListener
+        arguments:
+            - '@twig'
+        tags:
+            - { name: contao.hook, hook: parseBackendTemplate, priority: 0 }
+
+    contao_id_contao.event_listener.check_user_actions_listener:
+        class: ContaoId\ContaoBundle\EventListener\CheckUserActionsListener
+        arguments:
+            - '@request_stack'
+            - '@doctrine.dbal.default_connection'
+        tags:
+            - { name: contao.callback, table: tl_user, target: config.onload }
+
+    contao_id_contao.event_listener.hide_copy_user_action_listener:
+        class: ContaoId\ContaoBundle\EventListener\HideCopyUserActionListener
+        tags:
+            - { name: contao.callback, table: tl_user, target: list.operations.copy.button }
+
+    contao_id_contao.event_listener.hide_toggle_user_action_listener:
+        class: ContaoId\ContaoBundle\EventListener\HideToggleUserActionListener
+        tags:
+            - { name: contao.callback, table: tl_user, target: list.operations.toggle.button }
+
+    contao_id_contao.event_listener.hide_user_form_field_listener:
+        class: ContaoId\ContaoBundle\EventListener\HideUserFormFieldListener
+        arguments:
+            - '@request_stack'
+            - '@contao.framework'
+        tags:
+            - { name: contao.callback, table: tl_user, target: config.onload }
+
+    contao_id_contao.event_listener.user_icon_listener:
+        class: ContaoId\ContaoBundle\EventListener\UserIconListener
+        arguments:
+            - '@twig'
+        tags:
+            - { name: contao.callback, table: tl_user, target: list.label.label }
+
+    contao_id_contao.security.user_provider:
+        class: ContaoId\ContaoBundle\Security\UserProvider
+        arguments:
+            - '@contao.framework'
+            - '@doctrine.dbal.default_connection'
+
+    # Alias for BC
+    ContaoId\ContaoBundle\Security\UserProvider: '@contao_id_contao.security.user_provider'

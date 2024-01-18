@@ -4,11 +4,9 @@ declare(strict_types=1);
 
 namespace ContaoId\ContaoBundle\EventListener;
 
-use Contao\CoreBundle\DependencyInjection\Attribute\AsCallback;
 use Contao\DataContainer;
 use Contao\System;
 
-#[AsCallback(table: 'tl_user', target: 'list.operations.toggle.button')]
 class HideToggleUserActionListener
 {
     public function __invoke(

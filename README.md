@@ -16,7 +16,7 @@ contao_backend:
         failure_path: /contao/login
 
         oauth_user_provider:
-            service: ContaoId\ContaoBundle\Security\UserProvider
+            service: contao_id_contao.security.user_provider
 ```
 
 ## `config/packages/hwi_oauth.yaml`

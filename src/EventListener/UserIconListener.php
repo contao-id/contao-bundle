@@ -4,12 +4,10 @@ declare(strict_types=1);
 
 namespace ContaoId\ContaoBundle\EventListener;
 
-use Contao\CoreBundle\DependencyInjection\Attribute\AsCallback;
 use Contao\DataContainer;
 use Contao\System;
 use Twig\Environment;
 
-#[AsCallback(table: 'tl_user', target: 'list.label.label')]
 class UserIconListener
 {
     public function __construct(

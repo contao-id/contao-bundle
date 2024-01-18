@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace ContaoId\ContaoBundle\EventListener;
 
-use Contao\CoreBundle\DependencyInjection\Attribute\AsHook;
 use Twig\Environment;
 
-#[AsHook(hook: 'parseBackendTemplate', priority: 0)]
 class ButtonInjectionListener
 {
     public function __construct(
