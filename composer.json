@@ -10,7 +10,7 @@
         "OAuth",
         "Single sign on"
     ],
-    "license": "proprietary",
+    "license": "MIT",
     "authors": [
         {
             "name": "David Greminger",

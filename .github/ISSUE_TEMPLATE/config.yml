@@ -1,0 +1,6 @@
+contact_links:
+    - name: Get support
+      url: https://contao.id
+      about: If you need help using contao.id, please reach us at hello@contao.id
+
+blank_issues_enabled: false
