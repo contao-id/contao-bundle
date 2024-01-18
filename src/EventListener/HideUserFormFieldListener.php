@@ -5,13 +5,11 @@ declare(strict_types=1);
 namespace ContaoId\ContaoBundle\EventListener;
 
 use Contao\CoreBundle\DataContainer\PaletteManipulator;
-use Contao\CoreBundle\DependencyInjection\Attribute\AsCallback;
 use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\DataContainer;
 use Contao\UserModel;
 use Symfony\Component\HttpFoundation\RequestStack;
 
-#[AsCallback(table: 'tl_user', target: 'config.onload')]
 class HideUserFormFieldListener
 {
     public function __construct(

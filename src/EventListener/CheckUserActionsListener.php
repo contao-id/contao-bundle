@@ -4,14 +4,12 @@ declare(strict_types=1);
 
 namespace ContaoId\ContaoBundle\EventListener;
 
-use Contao\CoreBundle\DependencyInjection\Attribute\AsCallback;
 use Contao\CoreBundle\Exception\AccessDeniedException;
 use Contao\DataContainer;
 use Doctrine\DBAL\Connection;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 
-#[AsCallback(table: 'tl_user', target: 'config.onload')]
 class CheckUserActionsListener
 {
     public function __construct(
