@@ -92,7 +92,7 @@ class UserProvider implements UserProviderInterface, OAuthAwareUserProviderInter
                 'email' => $mail,
                 'language' => $language,
                 'backendTheme' => 'flexible',
-                'uploader' => 'Dropzone',
+                'uploader' => 'DropZone',
                 'showHelp' => 1,
                 'thumbnails' => 1,
                 'useRTE' => 1,
