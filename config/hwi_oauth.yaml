@@ -1,0 +1,16 @@
+hwi_oauth:
+    firewall_names: [contao_backend]
+
+    resource_owners:
+        contao_id:
+            type:                oauth2
+            class:               HWI\Bundle\OAuthBundle\OAuth\ResourceOwner\OAuth2ResourceOwner
+            client_id:           '%contao_id_identifier%'
+            client_secret:       '%contao_id_secret%'
+            access_token_url:    'https://contao.id/auth/token'
+            authorization_url:   'https://contao.id/auth/authorize'
+            infos_url:           'https://contao.id/api/auth/info/%contao_id_identifier%'
+            scope:               'read'
+            user_response_class: HWI\Bundle\OAuthBundle\OAuth\Response\PathUserResponse
+            paths:
+                identifier: id
