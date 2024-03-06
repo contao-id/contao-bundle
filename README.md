@@ -47,12 +47,12 @@ HWI\Bundle\OAuthBundle\HWIOAuthBundle::class => ['all' => true],
 ContaoId\ContaoBundle\ContaoIdContaoBundle::class => ['all' => true],
 ```
 
-## `config/config.yaml`
+## `.env.local`
 
 ```
 # Contao ID
-contao_id_identifier: 1234
-contao_id_secret: 12345678
+CONTAO_ID_IDENTIFIER=1234
+CONTAO_ID_SECRET=12345678
 ```
 
 ## `config/routes.yaml`
