@@ -31,9 +31,9 @@ hwi_oauth:
             class:               HWI\Bundle\OAuthBundle\OAuth\ResourceOwner\OAuth2ResourceOwner
             client_id:           '%contao_id_identifier%'
             client_secret:       '%contao_id_secret%'
-            access_token_url:    'https://contao.id/auth/token'
-            authorization_url:   'https://contao.id/auth/authorize'
-            infos_url:           'https://contao.id/api/auth/info/%contao_id_identifier%'
+            access_token_url:    'https://auth.contao.id/auth/token'
+            authorization_url:   'https://auth.contao.id/auth/authorize'
+            infos_url:           'https://auth.contao.id/api/auth/info/%contao_id_identifier%'
             scope:               'read'
             user_response_class: HWI\Bundle\OAuthBundle\OAuth\Response\PathUserResponse
             paths:
@@ -47,12 +47,12 @@ HWI\Bundle\OAuthBundle\HWIOAuthBundle::class => ['all' => true],
 ContaoId\ContaoBundle\ContaoIdContaoBundle::class => ['all' => true],
 ```
 
-## `config/config.yaml`
+## `.env.local`
 
 ```
 # Contao ID
-contao_id_identifier: 1234
-contao_id_secret: 12345678
+CONTAO_ID_IDENTIFIER=1234
+CONTAO_ID_SECRET=12345678
 ```
 
 ## `config/routes.yaml`
