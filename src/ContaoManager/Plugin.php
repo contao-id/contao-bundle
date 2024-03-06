@@ -44,11 +44,11 @@ final class Plugin implements BundlePluginInterface, ConfigPluginInterface, Exte
         $this->enhanceSecurityConfig($extensionName, $extensionConfigs, $container);
 
         if (!$container->hasParameter('contao_id_identifier')) {
-            $container->setParameter('contao_id_identifier', '1234');
+            $container->setParameter('contao_id_identifier', '%env(CONTAO_ID_IDENTIFIER)%');
         }
 
         if (!$container->hasParameter('contao_id_secret')) {
-            $container->setParameter('contao_id_secret', '12345678');
+            $container->setParameter('contao_id_secret', '%env(CONTAO_ID_SECRET)%');
         }
 
         return $extensionConfigs;
