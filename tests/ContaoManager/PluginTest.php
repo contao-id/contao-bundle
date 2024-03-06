@@ -81,6 +81,7 @@ class PluginTest extends TestCase
         $extensionConfigs = $plugin->getExtensionConfig('security', [['firewalls' => ['contao_backend' => []]]], $container);
 
         $this->assertSame([
+            'entry_point' => 'contao_login',
             'oauth' => [
                 'resource_owners' => [
                     'contao_id' => '/contao/login/contao_id',
