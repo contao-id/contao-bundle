@@ -18,7 +18,7 @@ class HideUserFormFieldListener
     ) {
     }
 
-    public function __invoke(DataContainer|null $dataContainer): void
+    public function __invoke(?DataContainer $dataContainer): void
     {
         if (null === $dataContainer || !$dataContainer->id || 'edit' !== $this->requestStack->getCurrentRequest()?->query->get('act')) {
             return;

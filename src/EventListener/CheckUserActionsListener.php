@@ -18,7 +18,7 @@ class CheckUserActionsListener
     ) {
     }
 
-    public function __invoke(DataContainer|null $dataContainer): void
+    public function __invoke(?DataContainer $dataContainer): void
     {
         $request = $this->requestStack->getCurrentRequest();
 
