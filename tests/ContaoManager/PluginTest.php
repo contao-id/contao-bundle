@@ -70,8 +70,8 @@ class PluginTest extends TestCase
             ->method('setParameter')
             ->willReturnCallback(function (string $property, string $value) use ($matcher) {
                 match ($matcher->getInvocationCount()) {
-                    1 => $this->assertSame(['contao_id_identifier', '1234'], [$property, $value]),
-                    2 => $this->assertSame(['contao_id_secret', '12345678'], [$property, $value]),
+                    1 => $this->assertSame(['contao_id_identifier', '%env(CONTAO_ID_IDENTIFIER)%'], [$property, $value]),
+                    2 => $this->assertSame(['contao_id_secret', '%env(CONTAO_ID_SECRET)%'], [$property, $value]),
                 };
 
                 return false;
