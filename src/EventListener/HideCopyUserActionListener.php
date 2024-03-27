@@ -9,7 +9,7 @@ use Contao\BackendUser;
 use Contao\DataContainer;
 use Contao\Image;
 use Contao\StringUtil;
-use Symfony\Bundle\SecurityBundle\Security;
+use Symfony\Component\Security\Core\Security;
 
 // TODO: replace this listener with a proper voter
 class HideCopyUserActionListener
