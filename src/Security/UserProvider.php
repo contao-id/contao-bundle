@@ -7,6 +7,7 @@ namespace ContaoId\ContaoBundle\Security;
 use Contao\BackendUser;
 use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\User;
+use Doctrine\DBAL\ArrayParameterType;
 use Doctrine\DBAL\Connection;
 use HWI\Bundle\OAuthBundle\OAuth\Response\UserResponseInterface;
 use HWI\Bundle\OAuthBundle\Security\Core\User\OAuthAwareUserProviderInterface;
@@ -52,6 +53,7 @@ class UserProvider implements UserProviderInterface, OAuthAwareUserProviderInter
         $mail = $data['email'];
         $name = sprintf('%s %s', $data['firstname'], $data['lastname']);
         $language = $data['language'];
+        $clientUsers = (array) ($data['client_users'] ?? []);
 
         // Check roles
         $groups = [];
@@ -127,6 +129,16 @@ class UserProvider implements UserProviderInterface, OAuthAwareUserProviderInter
             'id' => $id,
             'groups' => serialize($groups),
         ]);
+
+        // Delete contao.id users that do not have access anymore
+        // $clientUsers should have at least one entry, since we were authenticated successfully, double check it anyway
+        if (\count($clientUsers) > 0) {
+            $this->connection->executeQuery('DELETE FROM tl_user WHERE contaoIdRemoteId <> "" AND contaoIdRemoteId NOT IN (:clientUsers) ', [
+                'clientUsers' => $clientUsers,
+            ], [
+                'clientUsers' => ArrayParameterType::STRING,
+            ]);
+        }
 
         $statement = $this->connection->executeQuery('SELECT username FROM tl_user WHERE id = :id', [
             'id' => $id,
