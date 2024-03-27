@@ -24,11 +24,15 @@ services:
 
     contao_id_contao.event_listener.hide_copy_user_action_listener:
         class: ContaoId\ContaoBundle\EventListener\HideCopyUserActionListener
+        arguments:
+            - '@security.helper'
         tags:
             - { name: contao.callback, table: tl_user, target: list.operations.copy.button }
 
     contao_id_contao.event_listener.hide_toggle_user_action_listener:
         class: ContaoId\ContaoBundle\EventListener\HideToggleUserActionListener
+        arguments:
+            - '@security.helper'
         tags:
             - { name: contao.callback, table: tl_user, target: list.operations.toggle.button }
 
