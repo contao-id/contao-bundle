@@ -72,8 +72,6 @@ final class Plugin implements BundlePluginInterface, ConfigPluginInterface, Exte
 
         foreach ($extensionConfigs as &$extensionConfig) {
             if (isset($extensionConfig['firewalls']['contao_backend'])) {
-                // configure the form authentication as the main entry point for unauthenticated users (because of the oauth entry point)
-                // $extensionConfig['firewalls']['contao_backend']['entry_point'] = 'contao_login';
                 $extensionConfig['firewalls']['contao_backend']['oauth'] = [
                     'resource_owners' => [
                         'contao_id' => '/contao/login/contao_id',
