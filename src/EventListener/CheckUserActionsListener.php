@@ -10,6 +10,7 @@ use Doctrine\DBAL\Connection;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 
+// TODO: replace this listener with a proper voter
 class CheckUserActionsListener
 {
     public function __construct(
