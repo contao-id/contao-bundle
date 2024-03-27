@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace ContaoId\ContaoBundle\Tests\ContaoManager;
 
 use Contao\CoreBundle\ContaoCoreBundle;
+use Contao\ManagerBundle\ContaoManagerBundle;
 use Contao\ManagerPlugin\Bundle\Parser\ParserInterface;
 use Contao\ManagerPlugin\Config\ContainerBuilder;
 use ContaoId\ContaoBundle\ContaoIdContaoBundle;
@@ -27,7 +28,7 @@ class PluginTest extends TestCase
 
         self::assertSame(HWIOAuthBundle::class, $bundles[0]->getName());
         self::assertSame(ContaoIdContaoBundle::class, $bundles[1]->getName());
-        self::assertSame([ContaoCoreBundle::class, HWIOAuthBundle::class], $bundles[1]->getLoadAfter());
+        self::assertSame([ContaoCoreBundle::class, ContaoManagerBundle::class, HWIOAuthBundle::class], $bundles[1]->getLoadAfter());
     }
 
     public function testRegistersTheContainerConfiguration(): void
@@ -81,7 +82,6 @@ class PluginTest extends TestCase
         $extensionConfigs = $plugin->getExtensionConfig('security', [['firewalls' => ['contao_backend' => []]]], $container);
 
         $this->assertSame([
-            'entry_point' => 'contao_login',
             'oauth' => [
                 'resource_owners' => [
                     'contao_id' => '/contao/login/contao_id',
