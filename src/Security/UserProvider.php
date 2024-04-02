@@ -111,7 +111,6 @@ class UserProvider implements UserProviderInterface, OAuthAwareUserProviderInter
                 'name' => $name,
                 'username' => $mail,
                 'email' => $mail,
-                'language' => $language,
                 'admin' => \in_array('admin', $roles, true) ? 1 : 0,
                 'tstamp' => time(),
                 'lastLogin' => time(),
