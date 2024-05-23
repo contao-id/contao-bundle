@@ -14,3 +14,4 @@ contao_id_login:
     path: /contao/login/contao_id
     defaults:
         _scope: 'backend'
+        priority: 1
