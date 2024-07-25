@@ -9,12 +9,13 @@ parameters:
     bootstrapFiles:
         - %rootDir%/../../../vendor/autoload.php
 
-    checkMissingIterableValueType: false
     reportUnmatchedIgnoredErrors: false
     universalObjectCratesClasses:
         - Contao\UserModel
 
     ignoreErrors:
+        -
+        	identifier: missingType.iterableValue
         -
             message: '#Cannot call method load\(\) on Symfony\\Component\\Config\\Loader\\LoaderInterface\|false#'
             path: %currentWorkingDirectory%/src/ContaoManager/Plugin.php
