@@ -50,7 +50,7 @@ class UserProvider implements UserProviderInterface, OAuthAwareUserProviderInter
         $data = $response->getData();
 
         $mail = $data['email'];
-        $name = sprintf('%s %s', $data['firstname'], $data['lastname']);
+        $name = \sprintf('%s %s', $data['firstname'], $data['lastname']);
         $language = $data['language'];
 
         // Check roles
