@@ -26,18 +26,18 @@
         }
     ],
     "require": {
-        "php": "^8.1",
-        "contao/core-bundle": "^4.13 || ^5.0",
-        "contao/manager-bundle": "^4.13 || ^5.0",
+        "php": "^8.2",
+        "contao/core-bundle": "^5.3",
+        "contao/manager-bundle": "^5.3",
         "contao/manager-plugin": "^2.3.1",
         "doctrine/dbal": "^3.7",
         "hwi/oauth-bundle": "2.1.*",
-        "symfony/config": "^5.4 || ^6.0",
-        "symfony/dependency-injection": "^5.4 || ^6.0",
-        "symfony/http-foundation": "^5.4 || ^6.0",
-        "symfony/http-kernel": "^5.4 || ^6.0",
-        "symfony/security-bundle": "^5.4 || ^6.0",
-        "symfony/security-core": "^5.4 || ^6.0",
+        "symfony/config": "^6.4 || ^7.0",
+        "symfony/dependency-injection": "^6.4 || ^7.0",
+        "symfony/http-foundation": "^6.4 || ^7.0",
+        "symfony/http-kernel": "^6.4 || ^7.0",
+        "symfony/security-bundle": "^6.4 || ^7.0",
+        "symfony/security-core": "^6.4 || ^7.0",
         "twig/twig": "^3.8"
     },
     "require-dev": {
@@ -75,7 +75,7 @@
             "php-http/discovery": true
         },
         "platform": {
-            "php": "8.1"
+            "php": "8.2"
         },
         "sort-packages": true
     },
