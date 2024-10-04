@@ -72,6 +72,7 @@ final class Plugin implements BundlePluginInterface, ConfigPluginInterface, Exte
 
         foreach ($extensionConfigs as &$extensionConfig) {
             if (isset($extensionConfig['firewalls']['contao_backend'])) {
+                $extensionConfig['firewalls']['contao_backend']['entry_point'] = 'contao_login';
                 $extensionConfig['firewalls']['contao_backend']['oauth'] = [
                     'resource_owners' => [
                         'contao_id' => '/contao/login/contao_id',
