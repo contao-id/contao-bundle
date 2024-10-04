@@ -7,6 +7,8 @@
 contao_backend:
     [...]
 
+    entry_point: contao_login
+
     oauth:
         resource_owners:
             contao_id: "/contao/login/contao_id"
