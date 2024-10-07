@@ -1,7 +1,26 @@
 🔐 Contao ID Contao Bundle
 ==========================
 
-## `config/security.yaml`
+# Installation
+
+## By Contao Manager
+See https://extensions.contao.org/?p=contao-id%2Fcontao-bundle
+
+## By Composer
+
+`composer require contao-id/contao-bundle`
+
+## Configuration
+
+### `.env.local`
+
+```
+# Contao ID
+CONTAO_ID_IDENTIFIER=1234
+CONTAO_ID_SECRET=12345678
+```
+
+### `config/security.yaml`
 
 ```
 contao_backend:
@@ -21,7 +40,7 @@ contao_backend:
             service: contao_id_contao.security.user_provider
 ```
 
-## `config/packages/hwi_oauth.yaml`
+### `config/packages/hwi_oauth.yaml`
 
 ```
 hwi_oauth:
@@ -42,22 +61,14 @@ hwi_oauth:
                 identifier: id
 ```
 
-## `config/bundles.php`
+### `config/bundles.php`
 
 ```
 HWI\Bundle\OAuthBundle\HWIOAuthBundle::class => ['all' => true],
 ContaoId\ContaoBundle\ContaoIdContaoBundle::class => ['all' => true],
 ```
 
-## `.env.local`
-
-```
-# Contao ID
-CONTAO_ID_IDENTIFIER=1234
-CONTAO_ID_SECRET=12345678
-```
-
-## `config/routes.yaml`
+### `config/routes.yaml`
 
 ```
 [...]
