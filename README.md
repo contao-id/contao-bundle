@@ -1,4 +1,4 @@
-![](https://avatars.githubusercontent.com/u/114411521?s=32&v=4) Contao ID Contao Bundle
+contao.id Contao Bundle
 ==========================
 
 # Installation
