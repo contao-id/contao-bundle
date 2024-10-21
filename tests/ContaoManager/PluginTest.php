@@ -64,15 +64,17 @@ class PluginTest extends TestCase
             })
         ;
 
-        $matcher = $this->exactly(2);
+        $matcher = $this->exactly(4);
 
         $container
             ->expects($matcher)
             ->method('setParameter')
             ->willReturnCallback(function (string $property, string $value) use ($matcher) {
                 match ($matcher->getInvocationCount()) {
-                    1 => $this->assertSame(['contao_id_identifier', '%env(CONTAO_ID_IDENTIFIER)%'], [$property, $value]),
-                    2 => $this->assertSame(['contao_id_secret', '%env(CONTAO_ID_SECRET)%'], [$property, $value]),
+                    1 => $this->assertSame(['env(CONTAO_ID_IDENTIFIER)', ''], [$property, $value]),
+                    2 => $this->assertSame(['contao_id_identifier', '%env(CONTAO_ID_IDENTIFIER)%'], [$property, $value]),
+                    3 => $this->assertSame(['env(CONTAO_ID_SECRET)', ''], [$property, $value]),
+                    4 => $this->assertSame(['contao_id_secret', '%env(CONTAO_ID_SECRET)%'], [$property, $value]),
                 };
 
                 return false;
