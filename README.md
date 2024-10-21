@@ -1,11 +1,36 @@
-🔐 Contao ID Contao Bundle
+contao.id/contao-bundle
 ==========================
 
-## `config/security.yaml`
+# Installation
+
+## By Contao Manager
+See https://extensions.contao.org/?p=contao-id%2Fcontao-bundle
+
+## By Composer
+
+`composer require contao-id/contao-bundle`
+
+## Configuration
+
+### `.env.local`
+
+Copy the configuration values (provided by the **contao.id** application backend) and add them to the `.env.local`:
+
+```
+# contao.id
+CONTAO_ID_IDENTIFIER=56b2f1405da206fc08896dc2b26506db
+CONTAO_ID_SECRET=20794a680517dc01abfca8d8c134569e9f56ac34bdd6b4f8da656321731181c39f7a4378602fef43b313b23d9c523f1007c8acab2e26141bb748a4d664256ebe
+```
+![config-dialog](https://github.com/user-attachments/assets/5d2fcdf8-815f-49ae-81d7-59b7c98d6a41)
+
+
+### `config/security.yaml`
 
 ```
 contao_backend:
     [...]
+
+    entry_point: contao_login
 
     oauth:
         resource_owners:
@@ -19,7 +44,7 @@ contao_backend:
             service: contao_id_contao.security.user_provider
 ```
 
-## `config/packages/hwi_oauth.yaml`
+### `config/packages/hwi_oauth.yaml`
 
 ```
 hwi_oauth:
@@ -40,22 +65,14 @@ hwi_oauth:
                 identifier: id
 ```
 
-## `config/bundles.php`
+### `config/bundles.php`
 
 ```
 HWI\Bundle\OAuthBundle\HWIOAuthBundle::class => ['all' => true],
 ContaoId\ContaoBundle\ContaoIdContaoBundle::class => ['all' => true],
 ```
 
-## `.env.local`
-
-```
-# Contao ID
-CONTAO_ID_IDENTIFIER=1234
-CONTAO_ID_SECRET=12345678
-```
-
-## `config/routes.yaml`
+### `config/routes.yaml`
 
 ```
 [...]
