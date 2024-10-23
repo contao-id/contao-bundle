@@ -11,6 +11,6 @@ hwi_oauth_login:
     prefix:   /contao/oauth-login
 
 contao_id_login:
-    path: /contao/login/contao_id
+    path: '%contao.backend.route_prefix%/login/contao_id'
     defaults:
         _scope: 'backend'
