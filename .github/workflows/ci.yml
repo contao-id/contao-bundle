@@ -35,7 +35,7 @@ jobs:
                 run: vendor-bin/phpstan/vendor/bin/phpstan analyze src/ --level max --memory-limit=-1 --ansi
 
     unit-tests:
-        name: PHP ${{ matrix.php }} / Contao ^${{ matrix.contao }}
+        name: PHP ${{ matrix.php }} / Contao ${{ matrix.contao }}.*
         runs-on: ubuntu-latest
         strategy:
             fail-fast: false
@@ -58,7 +58,7 @@ jobs:
 
             -   name: Install the dependencies
                 run: |
-                    composer require contao/core-bundle:^${{ matrix.contao }}
+                    composer require contao/core-bundle:${{ matrix.contao }}.*
                     composer install --no-interaction --no-progress
 
             -   name: Run unit tests
@@ -71,7 +71,7 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-                contao: [ 5.3, 5.4 ]
+                contao: [ 5.3.*, 5.4.* ]
         steps:
             -   name: Checkout
                 uses: actions/checkout@v3
@@ -88,7 +88,7 @@ jobs:
 
             -   name: Install the dependencies
                 run: |
-                    composer require contao/core-bundle:^${{ matrix.contao }}
+                    composer require contao/core-bundle:${{ matrix.contao }}
                     composer install --no-interaction --no-progress
 
             -   name: Run unit tests
