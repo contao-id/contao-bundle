@@ -74,9 +74,6 @@
             "contao/manager-plugin": true,
             "php-http/discovery": true
         },
-        "platform": {
-            "php": "8.2"
-        },
         "sort-packages": true
     },
     "scripts": {
