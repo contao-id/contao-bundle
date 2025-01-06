@@ -44,6 +44,13 @@ services:
         tags:
             - { name: contao.callback, table: tl_user, target: config.onload }
 
+    contao_id_contao.event_listener.menu.backend_login_listener:
+        class: ContaoId\ContaoBundle\EventListener\Menu\BackendLoginListener
+        arguments:
+            - '@translator'
+            - '@router'
+        tags: [kernel.event_listener]
+
     contao_id_contao.event_listener.user_icon_listener:
         class: ContaoId\ContaoBundle\EventListener\UserIconListener
         arguments:
