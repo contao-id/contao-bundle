@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace ContaoId\ContaoBundle\Tests\ContaoManager;
 
 use Contao\CoreBundle\ContaoCoreBundle;
+use Contao\ManagerBundle\ContaoManagerBundle;
 use Contao\ManagerPlugin\Bundle\Parser\ParserInterface;
 use Contao\ManagerPlugin\Config\ContainerBuilder;
 use ContaoId\ContaoBundle\ContaoIdContaoBundle;
@@ -27,7 +28,7 @@ class PluginTest extends TestCase
 
         self::assertSame(HWIOAuthBundle::class, $bundles[0]->getName());
         self::assertSame(ContaoIdContaoBundle::class, $bundles[1]->getName());
-        self::assertSame([ContaoCoreBundle::class, HWIOAuthBundle::class], $bundles[1]->getLoadAfter());
+        self::assertSame([ContaoCoreBundle::class, ContaoManagerBundle::class, HWIOAuthBundle::class], $bundles[1]->getLoadAfter());
     }
 
     public function testRegistersTheContainerConfiguration(): void
@@ -63,15 +64,17 @@ class PluginTest extends TestCase
             })
         ;
 
-        $matcher = $this->exactly(2);
+        $matcher = $this->exactly(4);
 
         $container
             ->expects($matcher)
             ->method('setParameter')
             ->willReturnCallback(function (string $property, string $value) use ($matcher) {
                 match ($matcher->getInvocationCount()) {
-                    1 => $this->assertSame(['contao_id_identifier', '%env(CONTAO_ID_IDENTIFIER)%'], [$property, $value]),
-                    2 => $this->assertSame(['contao_id_secret', '%env(CONTAO_ID_SECRET)%'], [$property, $value]),
+                    1 => $this->assertSame(['env(CONTAO_ID_IDENTIFIER)', ''], [$property, $value]),
+                    2 => $this->assertSame(['contao_id_identifier', '%env(CONTAO_ID_IDENTIFIER)%'], [$property, $value]),
+                    3 => $this->assertSame(['env(CONTAO_ID_SECRET)', ''], [$property, $value]),
+                    4 => $this->assertSame(['contao_id_secret', '%env(CONTAO_ID_SECRET)%'], [$property, $value]),
                 };
 
                 return false;

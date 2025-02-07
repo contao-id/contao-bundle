@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace ContaoId\ContaoBundle\ContaoManager;
 
 use Contao\CoreBundle\ContaoCoreBundle;
+use Contao\ManagerBundle\ContaoManagerBundle;
 use Contao\ManagerPlugin\Bundle\BundlePluginInterface;
 use Contao\ManagerPlugin\Bundle\Config\BundleConfig;
 use Contao\ManagerPlugin\Bundle\Parser\ParserInterface;
@@ -28,6 +29,7 @@ final class Plugin implements BundlePluginInterface, ConfigPluginInterface, Exte
             BundleConfig::create(ContaoIdContaoBundle::class)
                 ->setLoadAfter([
                     ContaoCoreBundle::class,
+                    ContaoManagerBundle::class,
                     HWIOAuthBundle::class,
                 ]),
         ];
@@ -44,10 +46,12 @@ final class Plugin implements BundlePluginInterface, ConfigPluginInterface, Exte
         $this->enhanceSecurityConfig($extensionName, $extensionConfigs, $container);
 
         if (!$container->hasParameter('contao_id_identifier')) {
+            $container->setParameter('env(CONTAO_ID_IDENTIFIER)', '');
             $container->setParameter('contao_id_identifier', '%env(CONTAO_ID_IDENTIFIER)%');
         }
 
         if (!$container->hasParameter('contao_id_secret')) {
+            $container->setParameter('env(CONTAO_ID_SECRET)', '');
             $container->setParameter('contao_id_secret', '%env(CONTAO_ID_SECRET)%');
         }
 
@@ -70,7 +74,6 @@ final class Plugin implements BundlePluginInterface, ConfigPluginInterface, Exte
 
         foreach ($extensionConfigs as &$extensionConfig) {
             if (isset($extensionConfig['firewalls']['contao_backend'])) {
-                // configure the form authentication as the main entry point for unauthenticated users (because of the oauth entry point)
                 $extensionConfig['firewalls']['contao_backend']['entry_point'] = 'contao_login';
                 $extensionConfig['firewalls']['contao_backend']['oauth'] = [
                     'resource_owners' => [

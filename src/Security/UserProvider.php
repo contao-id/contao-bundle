@@ -51,7 +51,7 @@ class UserProvider implements UserProviderInterface, OAuthAwareUserProviderInter
         $data = $response->getData();
 
         $mail = $data['email'];
-        $name = sprintf('%s %s', $data['firstname'], $data['lastname']);
+        $name = \sprintf('%s %s', $data['firstname'], $data['lastname']);
         $language = $data['language'];
         $clientUsers = (array) ($data['client_users'] ?? []);
 
@@ -113,7 +113,6 @@ class UserProvider implements UserProviderInterface, OAuthAwareUserProviderInter
                 'name' => $name,
                 'username' => $mail,
                 'email' => $mail,
-                'language' => $language,
                 'admin' => \in_array('admin', $roles, true) ? 1 : 0,
                 'tstamp' => time(),
                 'lastLogin' => time(),

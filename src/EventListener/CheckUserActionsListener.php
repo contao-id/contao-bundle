@@ -27,12 +27,14 @@ class CheckUserActionsListener
             return;
         }
 
+        /** @var ?string $action */
         $action = $request->get('act');
 
         if (null === $action) {
             return;
         }
 
+        /** @var string $id */
         $id = $request->get('id');
         $user = $this->connection->executeQuery('SELECT * FROM tl_user WHERE id = :id', ['id' => $id])->fetchAssociative();
 
