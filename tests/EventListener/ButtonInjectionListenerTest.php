@@ -25,7 +25,11 @@ class ButtonInjectionListenerTest extends TestCase
         $expectedBuffer = '<main><form><div>Hello!_buttons</div></form></main>';
 
         $twig = $this->createMock(Environment::class);
-        $twig->expects($this->once())->method('render')->willReturn('_buttons');
+        $twig
+            ->expects($this->once())
+            ->method('render')
+            ->willReturn('_buttons')
+        ;
 
         $listener = new ButtonInjectionListener($twig);
         $appended = $listener($buffer, 'be_login');
