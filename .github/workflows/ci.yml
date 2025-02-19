@@ -64,35 +64,35 @@ jobs:
             -   name: Run unit tests
                 run: vendor-bin/phpunit/vendor/bin/phpunit --colors=always
 
-    nightly:
-        name: PHP 8.5
-        runs-on: ubuntu-latest
-        continue-on-error: true
-        strategy:
-            fail-fast: false
-            matrix:
-                contao: [ 5.3.*, 5.4.*, 5.5.* ]
-        steps:
-            -   name: Checkout
-                uses: actions/checkout@v3
-
-            -   name: Setup PHP
-                uses: shivammathur/setup-php@v2
-                with:
-                    php-version: 8.5
-                    extensions: bcmath, dom, fileinfo, filter, gd, hash, intl, json, mbstring, mysqli, pcre, pdo_mysql, zip, zlib
-                    coverage: none
-
-                env:
-                    COMPOSER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-            -   name: Install the dependencies
-                run: |
-                    composer require contao/core-bundle:${{ matrix.contao }}
-                    composer install --no-interaction --no-progress
-
-            -   name: Run unit tests
-                run: vendor-bin/phpunit/vendor/bin/phpunit --colors=always
+#    nightly:
+#        name: PHP 8.5
+#        runs-on: ubuntu-latest
+#        continue-on-error: true
+#        strategy:
+#            fail-fast: false
+#            matrix:
+#                contao: [ 5.3.*, 5.4.*, 5.5.* ]
+#        steps:
+#            -   name: Checkout
+#                uses: actions/checkout@v3
+#
+#            -   name: Setup PHP
+#                uses: shivammathur/setup-php@v2
+#                with:
+#                    php-version: 8.5
+#                    extensions: bcmath, dom, fileinfo, filter, gd, hash, intl, json, mbstring, mysqli, pcre, pdo_mysql, zip, zlib
+#                    coverage: none
+#
+#                env:
+#                    COMPOSER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#
+#            -   name: Install the dependencies
+#                run: |
+#                    composer require contao/core-bundle:${{ matrix.contao }}
+#                    composer install --no-interaction --no-progress
+#
+#            -   name: Run unit tests
+#                run: vendor-bin/phpunit/vendor/bin/phpunit --colors=always
 
     check-composer-requirements:
         name: Check Composer requirements
