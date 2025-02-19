@@ -3,6 +3,6 @@
     "type": "project",
     "php": ">=8.1",
     "require-dev": {
-        "rector/rector": "^0.15"
+        "rector/rector": "^2.0"
     }
 }

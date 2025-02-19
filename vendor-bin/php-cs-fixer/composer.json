@@ -3,7 +3,6 @@
     "type": "project",
     "php": ">=8.1",
     "require-dev": {
-        "contao/easy-coding-standard": "^3.3",
         "friendsofphp/php-cs-fixer": "^3.0"
     },
     "config": {

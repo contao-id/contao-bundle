@@ -15,6 +15,10 @@ class ButtonInjectionListener
 
     public function __invoke(string $buffer, string $template): string
     {
+        if (class_exists(\Contao\CoreBundle\EventListener\Menu\BackendLoginListener::class)) {
+            return $buffer;
+        }
+
         if ('be_login' !== $template) {
             return $buffer;
         }
