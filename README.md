@@ -16,13 +16,14 @@ See https://extensions.contao.org/?p=contao-id%2Fcontao-bundle
 
 Copy the configuration values (provided by the **contao.id** application backend) and add them to the `.env.local`:
 
+⚠️ If you don't already have a `.env` file, create one and add it there.
+
 ```
 # contao.id
 CONTAO_ID_IDENTIFIER=56b2f1405da206fc08896dc2b26506db
 CONTAO_ID_SECRET=20794a680517dc01abfca8d8c134569e9f56ac34bdd6b4f8da656321731181c39f7a4378602fef43b313b23d9c523f1007c8acab2e26141bb748a4d664256ebe
 ```
 ![config-dialog](https://github.com/user-attachments/assets/5d2fcdf8-815f-49ae-81d7-59b7c98d6a41)
-
 
 ### `config/security.yaml`
 
