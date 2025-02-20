@@ -1,6 +1,5 @@
-{% set path = '/bundles/contaoidcontao/' ~ (isAdmin ? 'admin' : 'user') ~ '.svg' %}
-{% set disabledPath = '/bundles/contaoidcontao/' ~ (isAdmin ? 'admin' : 'user') ~ '_.svg' %}
+{% set path = '/bundles/contaoidcontao/' ~ (isLegacy ? 'legacy/' : '') ~ (isAdmin ? 'admin' : 'user') ~ '.svg' %}
 
-<div title="Provided by contao.id" class="list_icon_new" style="background-image:url({{ path }})"  data-icon="{{ path }}" data-icon-disabled="{{ disabledPath }}">
+<div title="Provided by contao.id" class="list_icon_new" style="background-image:url({{ path }})"  data-icon="{{ path }}">
     &nbsp;
 </div>

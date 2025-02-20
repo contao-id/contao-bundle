@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace ContaoId\ContaoBundle\EventListener;
 
+use Contao\CoreBundle\ContaoCoreBundle;
 use Contao\DataContainer;
 use Contao\System;
 use Twig\Environment;
@@ -27,6 +28,7 @@ class UserIconListener
 
         $labels[0] = $this->twig->render('@ContaoIdContao/user_icon.html.twig', [
             'isAdmin' => (bool) $row['admin'],
+            'isLegacy' => version_compare(ContaoCoreBundle::getVersion(), '5.5.0', '<='),
         ]);
 
         return $labels;
