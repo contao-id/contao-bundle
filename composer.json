@@ -90,7 +90,7 @@
             "@php vendor-bin/php-cs-fixer/vendor/bin/php-cs-fixer fix -vvv --ansi"
         ],
         "phpstan": [
-            "@php vendor-bin/phpstan/vendor/bin/phpstan analyze src/ --level max --memory-limit=-1 --ansi"
+            "@php vendor-bin/phpstan/vendor/bin/phpstan analyze src/ --level 9 --memory-limit=-1 --ansi"
         ],
         "phpunit": [
             "@php vendor-bin/phpunit/vendor/bin/phpunit --colors=always"

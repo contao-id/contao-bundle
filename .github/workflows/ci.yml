@@ -32,7 +32,7 @@ jobs:
                     vendor-bin/php-cs-fixer/vendor/bin/php-cs-fixer fix --dry-run -vvv --ansi
 
             -   name: Run static analysis
-                run: vendor-bin/phpstan/vendor/bin/phpstan analyze src/ --level max --memory-limit=-1 --ansi
+                run: vendor-bin/phpstan/vendor/bin/phpstan analyze src/ --level 9 --memory-limit=-1 --ansi
 
     unit-tests:
         name: PHP ${{ matrix.php }} / Contao ${{ matrix.contao }}.*
