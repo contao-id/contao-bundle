@@ -1,6 +1,12 @@
 contao.id/contao-bundle
 ==========================
 
+[![Latest Stable Version](https://poser.pugx.org/contao-id/contao-bundle/v)](https://packagist.org/packages/contao-id/contao-bundle)
+[![Total Downloads](https://poser.pugx.org/contao-id/contao-bundle/downloads)](https://packagist.org/packages/contao-id/contao-bundle)
+[![Latest Unstable Version](https://poser.pugx.org/contao-id/contao-bundle/v/unstable)](https://packagist.org/packages/contao-id/contao-bundle)
+[![License](https://poser.pugx.org/contao-id/contao-bundle/license)](https://packagist.org/packages/contao-id/contao-bundle)
+[![PHP Version Require](https://poser.pugx.org/contao-id/contao-bundle/require/php)](https://packagist.org/packages/contao-id/contao-bundle)
+
 # Installation
 
 ## By Contao Manager
