@@ -55,7 +55,7 @@ class PluginTest extends TestCase
             ->expects($matcher)
             ->method('hasParameter')
             ->willReturnCallback(function (string $property) use ($matcher) {
-                match ($matcher->getInvocationCount()) {
+                match ($matcher->numberOfInvocations()) {
                     1 => $this->assertSame('contao_id_identifier', $property),
                     2 => $this->assertSame('contao_id_secret', $property),
                 };
@@ -70,7 +70,7 @@ class PluginTest extends TestCase
             ->expects($matcher)
             ->method('setParameter')
             ->willReturnCallback(function (string $property, string $value) use ($matcher) {
-                match ($matcher->getInvocationCount()) {
+                match ($matcher->numberOfInvocations()) {
                     1 => $this->assertSame(['env(CONTAO_ID_IDENTIFIER)', ''], [$property, $value]),
                     2 => $this->assertSame(['contao_id_identifier', '%env(CONTAO_ID_IDENTIFIER)%'], [$property, $value]),
                     3 => $this->assertSame(['env(CONTAO_ID_SECRET)', ''], [$property, $value]),

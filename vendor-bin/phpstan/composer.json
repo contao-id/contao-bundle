@@ -3,8 +3,8 @@
     "type": "project",
     "php": ">=8.1",
     "require-dev": {
-        "phpstan/phpstan": "^1.0",
-        "phpstan/phpstan-doctrine": "^1.0",
-        "phpstan/phpstan-symfony": "^1.0"
+        "phpstan/phpstan": "^2.1",
+        "phpstan/phpstan-doctrine": "^2.0",
+        "phpstan/phpstan-symfony": "^2.0"
     }
 }

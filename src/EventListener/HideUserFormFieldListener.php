@@ -25,6 +25,7 @@ class HideUserFormFieldListener
         }
 
         /** @var UserModel $userModel */
+        // @phpstan-ignore varTag.nativeType
         $userModel = $this->framework->getAdapter(UserModel::class);
         $user = $userModel->findById($dataContainer->id);
 
@@ -32,8 +33,9 @@ class HideUserFormFieldListener
             return;
         }
 
+        // @phpstan-ignore foreach.nonIterable, offsetAccess.nonOffsetAccessible, offsetAccess.nonOffsetAccessible
         foreach ($GLOBALS['TL_DCA']['tl_user']['palettes'] as $palette => $fields) {
-            if (!\is_string($fields)) {
+            if (!\is_string($fields) || !\is_string($palette)) {
                 continue;
             }
 
@@ -41,6 +43,7 @@ class HideUserFormFieldListener
         }
 
         foreach (['username', 'name', 'email'] as $field) {
+            // @phpstan-ignore-next-line
             $GLOBALS['TL_DCA']['tl_user']['fields'][$field]['eval']['readonly'] = true;
         }
     }

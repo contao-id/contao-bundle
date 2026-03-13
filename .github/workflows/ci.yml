@@ -1,8 +1,8 @@
 name: CI
 
 on:
-    push:
-    pull_request:
+    push: ~
+    pull_request: ~
     schedule:
         - cron: "0 0 * * *"
 
@@ -32,7 +32,7 @@ jobs:
                     vendor-bin/php-cs-fixer/vendor/bin/php-cs-fixer fix --dry-run -vvv --ansi
 
             -   name: Run static analysis
-                run: vendor-bin/phpstan/vendor/bin/phpstan analyze src/ --level max --memory-limit=-1 --ansi
+                run: vendor-bin/phpstan/vendor/bin/phpstan analyze src/ --level 9 --memory-limit=-1 --ansi
 
     unit-tests:
         name: PHP ${{ matrix.php }} / Contao ${{ matrix.contao }}.*
@@ -40,8 +40,12 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-                php: [ 8.2, 8.3, 8.4 ]
-                contao: [ 5.3, 5.4, 5.5 ]
+                php: [ 8.2, 8.3, 8.4, 8.5 ]
+                contao: [ 5.3, 5.7 ]
+                exclude:
+                    - php: 8.2
+                      contao: 5.7
+
         steps:
             -   name: Checkout
                 uses: actions/checkout@v3
@@ -94,8 +98,8 @@ jobs:
 #            -   name: Run unit tests
 #                run: vendor-bin/phpunit/vendor/bin/phpunit --colors=always
 
-    check-composer-requirements:
-        name: Check Composer requirements
+    composer-dependency-analyser:
+        name: Analyse Composer dependencies
         runs-on: ubuntu-latest
         steps:
             -   name: Checkout
@@ -114,8 +118,8 @@ jobs:
             -   name: Install the dependencies
                 run: composer install --no-interaction --no-progress
 
-            -   name: Check the dependencies
-                run: vendor-bin/require-checker/vendor/bin/composer-require-checker check --config-file=vendor-bin/require-checker/config.json composer.json --ansi
+            -   name: Analyse the dependencies
+                run: vendor-bin/composer-dependency-analyser/vendor/bin/composer-dependency-analyser
 
     security-check:
         name: PHP Security Check

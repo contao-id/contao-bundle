@@ -23,3 +23,6 @@ parameters:
         -
             message: '#Method ContaoId\\ContaoBundle\\ContaoManager\\Plugin::getRouteCollection\(\) should return Symfony\\Component\\Routing\\RouteCollection\|null but returns mixed#'
             path: %currentWorkingDirectory%/src/ContaoManager/Plugin.php
+        -
+            message: '#Method ContaoId\\ContaoBundle\\ContaoManager\\Plugin::getExtensionConfig\(\) should return list<array<string, mixed>> but returns array#'
+            path: %currentWorkingDirectory%/src/ContaoManager/Plugin.php

@@ -34,6 +34,7 @@ class UserProvider implements UserProviderInterface, OAuthAwareUserProviderInter
     public function loadUserByIdentifier(string $identifier): UserInterface
     {
         /** @var BackendUser $adapter */
+        // @phpstan-ignore varTag.nativeType
         $adapter = $this->framework->getAdapter(BackendUser::class);
 
         $user = $adapter->loadUserByIdentifier($identifier);
@@ -152,6 +153,7 @@ class UserProvider implements UserProviderInterface, OAuthAwareUserProviderInter
     public function refreshUser(UserInterface $user): UserInterface
     {
         /** @var BackendUser $adapter */
+        // @phpstan-ignore varTag.nativeType
         $adapter = $this->framework->getAdapter(BackendUser::class);
 
         $refreshedUser = $adapter->loadUserByIdentifier($user->getUserIdentifier());
