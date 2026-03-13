@@ -4,3 +4,4 @@ composer.lock
 /vendor-bin/*/vendor
 /vendor-bin/*/composer.lock
 .phpunit.result.cache
+.phpunit.cache

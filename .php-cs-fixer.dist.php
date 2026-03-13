@@ -22,6 +22,10 @@ return $config
         '@PHP8x1Migration' => true,
         '@PHPUnit6x0Migration:risky' => true,
         '@PHPUnit7x5Migration:risky' => true,
+        '@PHPUnit8x4Migration:risky' => true,
+        '@PHPUnit9x1Migration:risky' => true,
+        '@PHPUnit10x0Migration:risky' => true,
+        '@PHPUnit11x0Migration:risky' => true,
         'align_multiline_comment' => true,
         'array_syntax' => ['syntax' => 'short'],
         'concat_space' => [
