@@ -89,6 +89,9 @@
         "cs-fixer": [
             "@php vendor-bin/php-cs-fixer/vendor/bin/php-cs-fixer fix -vvv --ansi"
         ],
+        "dependency-analyser": [
+            "@php vendor-bin/composer-dependency-analyser/vendor/bin/composer-dependency-analyser"
+        ],
         "phpstan": [
             "@php vendor-bin/phpstan/vendor/bin/phpstan analyze src/ --level 9 --memory-limit=-1 --ansi"
         ],
@@ -105,9 +108,6 @@
         ],
         "rector-fix": [
             "@php vendor-bin/rector/vendor/bin/rector --clear-cache process"
-        ],
-        "require-checker": [
-            "@php vendor-bin/require-checker/vendor/bin/composer-require-checker check --config-file=vendor-bin/require-checker/config.json composer.json --ansi"
         ]
     }
 }
