@@ -41,10 +41,14 @@ jobs:
             fail-fast: false
             matrix:
                 php: [ 8.2, 8.3, 8.4, 8.5 ]
-                contao: [ 5.3, 5.7 ]
+                contao: [ 5.3, 5.7, 6.0.0-RC2 ]
                 exclude:
                     - php: 8.2
                       contao: 5.7
+                    - php: 8.2
+                      contao: 6.0.0-RC2
+                    - php: 8.3
+                      contao: 6.0.0-RC2
 
         steps:
             -   name: Checkout
