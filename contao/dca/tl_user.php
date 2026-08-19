@@ -16,6 +16,7 @@ $GLOBALS['TL_DCA']['tl_user']['fields'] = [
             'sql' => [
                 'type' => Types::STRING,
                 'default' => '',
+                'length' => 255,
             ],
         ],
     ]
