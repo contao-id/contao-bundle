@@ -6,10 +6,10 @@ namespace ContaoId\ContaoBundle\Tests\EventListener\Menu;
 
 use Contao\CoreBundle\Event\MenuEvent;
 use ContaoId\ContaoBundle\EventListener\Menu\BackendLoginListener;
+use ContaoId\ContaoBundle\Routing\LoginUrlGenerator;
 use Knp\Menu\ItemInterface;
 use Knp\Menu\MenuFactory;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\Routing\RouterInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class BackendLoginListenerTest extends TestCase
@@ -36,9 +36,13 @@ class BackendLoginListenerTest extends TestCase
         ;
 
         $translator = $this->createMock(TranslatorInterface::class);
-        $router = $this->createMock(RouterInterface::class);
+        $loginUrlGenerator = $this->createMock(LoginUrlGenerator::class);
+        $loginUrlGenerator
+            ->expects($this->never())
+            ->method('generate')
+        ;
 
-        $listener = new BackendLoginListener($translator, $router);
+        $listener = new BackendLoginListener($translator, $loginUrlGenerator);
         $listener($event);
     }
 
@@ -57,15 +61,14 @@ class BackendLoginListenerTest extends TestCase
             ->willReturn('Login with contao.id')
         ;
 
-        $router = $this->createMock(RouterInterface::class);
-        $router
+        $loginUrlGenerator = $this->createMock(LoginUrlGenerator::class);
+        $loginUrlGenerator
             ->expects($this->once())
             ->method('generate')
-            ->with('hwi_oauth_service_redirect', ['service' => 'contao_id'])
             ->willReturn('https://localhost/contao/connect/contao_id')
         ;
 
-        $listener = new BackendLoginListener($translator, $router);
+        $listener = new BackendLoginListener($translator, $loginUrlGenerator);
         $listener($event);
 
         $children = $event->getTree()->getChildren();

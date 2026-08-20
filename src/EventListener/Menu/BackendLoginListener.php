@@ -5,14 +5,14 @@ declare(strict_types=1);
 namespace ContaoId\ContaoBundle\EventListener\Menu;
 
 use Contao\CoreBundle\Event\MenuEvent;
-use Symfony\Component\Routing\RouterInterface;
+use ContaoId\ContaoBundle\Routing\LoginUrlGenerator;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class BackendLoginListener
 {
     public function __construct(
         private readonly TranslatorInterface $translator,
-        private readonly RouterInterface $router,
+        private readonly LoginUrlGenerator $loginUrlGenerator,
     ) {
     }
 
@@ -28,7 +28,7 @@ class BackendLoginListener
             ->createItem('contaoid')
             ->setAttribute('class', 'contaoid')
             ->setLabel($this->translator->trans('login.button', [], 'ContaoIdContao'))
-            ->setUri($this->router->generate('hwi_oauth_service_redirect', ['service' => 'contao_id']))
+            ->setUri($this->loginUrlGenerator->generate())
             ->setLinkAttribute('class', 'tl_submit has-icon')
             ->setExtra('icon', '/bundles/contaoidcontao/contao-id.svg')
             ->setExtra('icon_dark', '/bundles/contaoidcontao/contao-id--dark.svg')
