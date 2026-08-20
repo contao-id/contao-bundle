@@ -23,12 +23,19 @@ class LoginTargetPathListener
     {
         $request = $event->getRequest();
 
-        if (
-            !$event->isMainRequest()
-            || 'hwi_oauth_service_redirect' !== $request->attributes->get('_route')
-            || 'contao_id' !== $request->attributes->get('service')
-            || !$request->hasSession()
-        ) {
+        if (!$event->isMainRequest()) {
+            return;
+        }
+
+        if ('hwi_oauth_service_redirect' !== $request->attributes->get('_route')) {
+            return;
+        }
+
+        if ('contao_id' !== $request->attributes->get('service')) {
+            return;
+        }
+
+        if (!$request->hasSession()) {
             return;
         }
 
