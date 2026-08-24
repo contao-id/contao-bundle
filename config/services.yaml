@@ -11,6 +11,7 @@ services:
         class: ContaoId\ContaoBundle\EventListener\ButtonInjectionListener
         arguments:
             - '@twig'
+            - '@contao_id_contao.routing.login_url_generator'
         tags:
             - { name: contao.hook, hook: parseBackendTemplate, priority: 0 }
 
@@ -44,11 +45,18 @@ services:
         tags:
             - { name: contao.callback, table: tl_user, target: config.onload }
 
+    contao_id_contao.event_listener.login_target_path_listener:
+        class: ContaoId\ContaoBundle\EventListener\LoginTargetPathListener
+        arguments:
+            - '@router'
+        tags:
+            - { name: kernel.event_listener, event: kernel.request }
+
     contao_id_contao.event_listener.menu.backend_login_listener:
         class: ContaoId\ContaoBundle\EventListener\Menu\BackendLoginListener
         arguments:
             - '@translator'
-            - '@router'
+            - '@contao_id_contao.routing.login_url_generator'
         tags: [kernel.event_listener]
 
     contao_id_contao.event_listener.user_icon_listener:
@@ -57,6 +65,12 @@ services:
             - '@twig'
         tags:
             - { name: contao.callback, table: tl_user, target: list.label.label }
+
+    contao_id_contao.routing.login_url_generator:
+        class: ContaoId\ContaoBundle\Routing\LoginUrlGenerator
+        arguments:
+            - '@router'
+            - '@request_stack'
 
     contao_id_contao.security.user_provider:
         class: ContaoId\ContaoBundle\Security\UserProvider

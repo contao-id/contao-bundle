@@ -5,5 +5,8 @@ declare(strict_types=1);
 use ShipMonk\ComposerDependencyAnalyser\Config\Configuration;
 
 return (new Configuration())
-    ->ignoreUnknownClasses(['PHPUnit\Framework\TestCase'])
+    ->ignoreUnknownClasses([
+        'PHPUnit\Framework\Attributes\DataProvider',
+        'PHPUnit\Framework\TestCase',
+    ])
 ;

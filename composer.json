@@ -39,6 +39,7 @@
         "symfony/routing": "^6.4 || ^7.0 || ^8.0",
         "symfony/security-bundle": "^6.4 || ^7.0 || ^8.0",
         "symfony/security-core": "^6.4 || ^7.0 || ^8.0",
+        "symfony/security-http": "^6.4 || ^7.0 || ^8.0",
         "symfony/translation-contracts": "^3.0",
         "twig/twig": "^3.8"
     },
@@ -101,7 +102,8 @@
         "pipeline": [
             "@cs-fixer",
             "@phpstan",
-            "@phpunit"
+            "@phpunit",
+            "@dependency-analyser"
         ],
         "rector": [
             "@php vendor-bin/rector/vendor/bin/rector process --clear-cache --dry-run"
