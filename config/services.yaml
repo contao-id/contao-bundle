@@ -15,28 +15,6 @@ services:
         tags:
             - { name: contao.hook, hook: parseBackendTemplate, priority: 0 }
 
-    contao_id_contao.event_listener.check_user_actions_listener:
-        class: ContaoId\ContaoBundle\EventListener\CheckUserActionsListener
-        arguments:
-            - '@request_stack'
-            - '@doctrine.dbal.default_connection'
-        tags:
-            - { name: contao.callback, table: tl_user, target: config.onload }
-
-    contao_id_contao.event_listener.hide_copy_user_action_listener:
-        class: ContaoId\ContaoBundle\EventListener\HideCopyUserActionListener
-        arguments:
-            - '@security.helper'
-        tags:
-            - { name: contao.callback, table: tl_user, target: list.operations.copy.button }
-
-    contao_id_contao.event_listener.hide_toggle_user_action_listener:
-        class: ContaoId\ContaoBundle\EventListener\HideToggleUserActionListener
-        arguments:
-            - '@security.helper'
-        tags:
-            - { name: contao.callback, table: tl_user, target: list.operations.toggle.button }
-
     contao_id_contao.event_listener.hide_user_form_field_listener:
         class: ContaoId\ContaoBundle\EventListener\HideUserFormFieldListener
         arguments:
@@ -71,6 +49,11 @@ services:
         arguments:
             - '@router'
             - '@request_stack'
+
+    contao_id_contao.security.voter.contao_id_user_voter:
+        class: ContaoId\ContaoBundle\Security\Voter\ContaoIdUserVoter
+        tags:
+            - { name: security.voter }
 
     contao_id_contao.security.user_provider:
         class: ContaoId\ContaoBundle\Security\UserProvider
