@@ -1,6 +1,4 @@
 hwi_oauth:
-    firewall_names: [contao_backend]
-
     resource_owners:
         contao_id:
             type:                oauth2
