@@ -7,6 +7,7 @@ use ShipMonk\ComposerDependencyAnalyser\Config\ErrorType;
 
 return (new Configuration())
     ->ignoreUnknownClasses([
+        'Contao\CoreBundle\DataContainer\RecordLabel', // TODO: Remove me when dropping Contao 5 support
         'PHPUnit\Framework\Attributes\DataProvider',
         'PHPUnit\Framework\TestCase',
     ])

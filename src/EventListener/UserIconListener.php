@@ -17,6 +17,8 @@ class UserIconListener
     ) {
     }
 
+    // TODO: Remove phpstan-ignore when dropping Contao 5 support
+    // @phpstan-ignore class.notFound
     public function __invoke(array $row, string $label, DataContainer $dataContainer, array $labels): array|RecordLabel
     {
         /** @var \tl_user $tlUser */
