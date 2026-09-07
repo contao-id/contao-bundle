@@ -34,11 +34,9 @@ class UserIconListener
             'isLegacy' => version_compare(ContaoCoreBundle::getVersion(), '5.5.0', '<='),
         ]);
 
-        if (class_exists(RecordLabel::class)) {
-            return RecordLabel::fromHtml($html);
+        if (class_exists(RecordLabel::class) && $labels instanceof RecordLabel) {
+            $labels->htmlColumns[0] = $html;
         }
-
-        $labels[0] = $html;
 
         return $labels;
     }
