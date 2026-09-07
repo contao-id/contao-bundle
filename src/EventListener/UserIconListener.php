@@ -23,10 +23,12 @@ class UserIconListener
     {
         /** @var \tl_user $tlUser */
         $tlUser = System::importStatic('tl_user');
-        $labels = $tlUser->addIcon($row, $label, $dataContainer, $labels);
+
+        /** @var array|RecordLabel $newLabel */
+        $newLabel = $tlUser->addIcon($row, $label, $dataContainer, $labels);
 
         if (!($row['contaoIdRemoteId'] ?? null)) {
-            return $labels;
+            return $newLabel;
         }
 
         $html = $this->twig->render('@ContaoIdContao/user_icon.html.twig', [
@@ -34,10 +36,10 @@ class UserIconListener
             'isLegacy' => version_compare(ContaoCoreBundle::getVersion(), '5.5.0', '<='),
         ]);
 
-        if (class_exists(RecordLabel::class) && $labels instanceof RecordLabel) {
-            $labels->htmlColumns[0] = $html;
+        if ($newLabel instanceof RecordLabel) {
+            $newLabel->htmlColumns[0] = $html;
         }
 
-        return $labels;
+        return $newLabel;
     }
 }
