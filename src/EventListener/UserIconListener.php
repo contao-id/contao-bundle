@@ -17,16 +17,18 @@ class UserIconListener
     ) {
     }
 
-    // TODO: Remove phpstan-ignore when dropping Contao 5 support
+    // TODO: Remove phpstan-ignore's when dropping Contao 5 support
     // @phpstan-ignore class.notFound
     public function __invoke(array $row, string $label, DataContainer $dataContainer, array $labels): array|RecordLabel
     {
         /** @var \tl_user $tlUser */
         $tlUser = System::importStatic('tl_user');
-        $labels = $tlUser->addIcon($row, $label, $dataContainer, $labels);
+
+        /** @var array|RecordLabel $newLabels */ // @phpstan-ignore class.notFound
+        $newLabels = $tlUser->addIcon($row, $label, $dataContainer, $labels);
 
         if (!($row['contaoIdRemoteId'] ?? null)) {
-            return $labels;
+            return $newLabels;
         }
 
         $html = $this->twig->render('@ContaoIdContao/user_icon.html.twig', [
@@ -34,12 +36,15 @@ class UserIconListener
             'isLegacy' => version_compare(ContaoCoreBundle::getVersion(), '5.5.0', '<='),
         ]);
 
-        if (class_exists(RecordLabel::class)) {
-            return RecordLabel::fromHtml($html);
+        // @phpstan-ignore class.notFound
+        if ($newLabels instanceof RecordLabel) {
+            $newLabels->htmlColumns[0] = $html; // @phpstan-ignore class.notFound, class.notFound
+
+            return $newLabels;
         }
 
-        $labels[0] = $html;
+        $newLabels[0] = $html;
 
-        return $labels;
+        return $newLabels;
     }
 }
