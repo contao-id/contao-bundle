@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace ContaoId\ContaoBundle\Security;
 
 use Contao\BackendUser;
+use Contao\CoreBundle\ContaoCoreBundle;
 use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\User;
 use Doctrine\DBAL\ArrayParameterType;
@@ -94,7 +95,6 @@ class UserProvider implements UserProviderInterface, OAuthAwareUserProviderInter
                 'name' => $name,
                 'email' => $mail,
                 'language' => $language,
-                'backendTheme' => 'flexible',
                 'uploader' => 'DropZone',
                 'showHelp' => 1,
                 'thumbnails' => 1,
@@ -109,6 +109,10 @@ class UserProvider implements UserProviderInterface, OAuthAwareUserProviderInter
             ]);
 
             $id = $this->connection->lastInsertId();
+
+            if (version_compare(ContaoCoreBundle::getVersion(), '6.0.0', '<')) {
+                $this->connection->update('tl_user', ['backendTheme' => 'flexible'], ['id' => $id]);
+            }
         } else {
             $this->connection->update('tl_user', [
                 'name' => $name,
