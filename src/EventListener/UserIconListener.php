@@ -17,14 +17,14 @@ class UserIconListener
     ) {
     }
 
-    // TODO: Remove phpstan-ignore when dropping Contao 5 support
+    // TODO: Remove phpstan-ignore's when dropping Contao 5 support
     // @phpstan-ignore class.notFound
     public function __invoke(array $row, string $label, DataContainer $dataContainer, array $labels): array|RecordLabel
     {
         /** @var \tl_user $tlUser */
         $tlUser = System::importStatic('tl_user');
 
-        /** @var array|RecordLabel $newLabel */
+        /** @var array|RecordLabel $newLabel */ // @phpstan-ignore class.notFound
         $newLabel = $tlUser->addIcon($row, $label, $dataContainer, $labels);
 
         if (!($row['contaoIdRemoteId'] ?? null)) {
@@ -36,8 +36,9 @@ class UserIconListener
             'isLegacy' => version_compare(ContaoCoreBundle::getVersion(), '5.5.0', '<='),
         ]);
 
+        // @phpstan-ignore class.notFound
         if ($newLabel instanceof RecordLabel) {
-            $newLabel->htmlColumns[0] = $html;
+            $newLabel->htmlColumns[0] = $html; // @phpstan-ignore class.notFound, class.notFound
         }
 
         return $newLabel;
