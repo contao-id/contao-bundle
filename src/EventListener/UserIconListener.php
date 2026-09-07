@@ -24,11 +24,11 @@ class UserIconListener
         /** @var \tl_user $tlUser */
         $tlUser = System::importStatic('tl_user');
 
-        /** @var array|RecordLabel $newLabel */ // @phpstan-ignore class.notFound
-        $newLabel = $tlUser->addIcon($row, $label, $dataContainer, $labels);
+        /** @var array|RecordLabel $newLabels */ // @phpstan-ignore class.notFound
+        $newLabels = $tlUser->addIcon($row, $label, $dataContainer, $labels);
 
         if (!($row['contaoIdRemoteId'] ?? null)) {
-            return $newLabel;
+            return $newLabels;
         }
 
         $html = $this->twig->render('@ContaoIdContao/user_icon.html.twig', [
@@ -37,14 +37,14 @@ class UserIconListener
         ]);
 
         // @phpstan-ignore class.notFound
-        if ($newLabel instanceof RecordLabel) {
-            $newLabel->htmlColumns[0] = $html; // @phpstan-ignore class.notFound, class.notFound
+        if ($newLabels instanceof RecordLabel) {
+            $newLabels->htmlColumns[0] = $html; // @phpstan-ignore class.notFound, class.notFound
 
-            return $newLabel;
+            return $newLabels;
         }
 
-        $newLabel[0] = $html;
+        $newLabels[0] = $html;
 
-        return $newLabel;
+        return $newLabels;
     }
 }
