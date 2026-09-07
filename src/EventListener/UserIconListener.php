@@ -39,7 +39,11 @@ class UserIconListener
         // @phpstan-ignore class.notFound
         if ($newLabel instanceof RecordLabel) {
             $newLabel->htmlColumns[0] = $html; // @phpstan-ignore class.notFound, class.notFound
+
+            return $newLabel;
         }
+
+        $newLabel[0] = $html;
 
         return $newLabel;
     }
