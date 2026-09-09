@@ -49,7 +49,7 @@ class PluginTest extends TestCase
     {
         $config = Yaml::parseFile(__DIR__ . '/../../config/hwi_oauth.yaml');
 
-        self::assertTrue($config['hwi_oauth']['resource_owners']['contao_id']['csrf']);
+        self::assertTrue($config['hwi_oauth']['resource_owners']['contao_id']['options']['csrf']);
     }
 
     public function testGetsTheExtensionConfig(): void
