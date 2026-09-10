@@ -10,7 +10,7 @@ use Contao\DataContainer;
 use Contao\UserModel;
 use Symfony\Component\HttpFoundation\RequestStack;
 
-class HideUserFormFieldListener
+class HideUserFieldsListener
 {
     public function __construct(
         private readonly RequestStack $requestStack,
@@ -20,16 +20,7 @@ class HideUserFormFieldListener
 
     public function __invoke(?DataContainer $dataContainer): void
     {
-        if (null === $dataContainer || !$dataContainer->id || 'edit' !== $this->requestStack->getCurrentRequest()?->query->get('act')) {
-            return;
-        }
-
-        /** @var UserModel $userModel */
-        // @phpstan-ignore varTag.nativeType
-        $userModel = $this->framework->getAdapter(UserModel::class);
-        $user = $userModel->findById($dataContainer->id);
-
-        if (null === $user || !$user->contaoIdRemoteId) {
+        if (null === $dataContainer || !$this->containsContaoIdUser($dataContainer)) {
             return;
         }
 
@@ -46,6 +37,52 @@ class HideUserFormFieldListener
             // @phpstan-ignore-next-line
             $GLOBALS['TL_DCA']['tl_user']['fields'][$field]['eval']['readonly'] = true;
         }
+    }
+
+    private function containsContaoIdUser(DataContainer $dataContainer): bool
+    {
+        if ([] === $ids = $this->getIds($dataContainer)) {
+            return false;
+        }
+
+        /** @var UserModel $userModelAdapter */
+        // @phpstan-ignore varTag.nativeType
+        $userModelAdapter = $this->framework->getAdapter(UserModel::class);
+        $users = $userModelAdapter->findMultipleByIds($ids);
+
+        if (null === $users) {
+            return false;
+        }
+
+        foreach ($users as $user) {
+            if ($user->contaoIdRemoteId) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private function getIds(DataContainer $dataContainer): array
+    {
+        if (null === $request = $this->requestStack->getCurrentRequest()) {
+            return [];
+        }
+
+        $act = $request->query->get('act');
+
+        if ('edit' === $act) {
+            return $dataContainer->id ? [$dataContainer->id] : [];
+        }
+
+        if (!\in_array($act, ['editAll', 'overrideAll'], true) || !$request->hasSession()) {
+            return [];
+        }
+
+        $session = $request->getSession()->all();
+        $ids = $session['CURRENT']['IDS'] ?? [];
+
+        return \is_array($ids) ? array_values($ids) : [];
     }
 
     private function removeFieldsFromPalette(string $palette, array $fields): void

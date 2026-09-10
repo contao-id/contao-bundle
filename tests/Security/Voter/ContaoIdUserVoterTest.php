@@ -79,6 +79,16 @@ class ContaoIdUserVoterTest extends TestCase
             VoterInterface::ACCESS_ABSTAIN,
         ];
 
+        yield 'updating an unmanaged field of a contao.id user is allowed' => [
+            new UpdateAction('tl_user', ['id' => 1, 'contaoIdRemoteId' => '01a03400-d132-7321-92e0-8c2d0ccaa420'], ['language' => 'de']),
+            VoterInterface::ACCESS_ABSTAIN,
+        ];
+
+        yield 'mixing an unmanaged with a managed field is denied' => [
+            new UpdateAction('tl_user', ['id' => 1, 'contaoIdRemoteId' => '01a03400-d132-7321-92e0-8c2d0ccaa420'], ['name' => 'Rick', 'password' => 'hash']),
+            VoterInterface::ACCESS_DENIED,
+        ];
+
         yield 'reading a contao.id user is allowed' => [
             new ReadAction('tl_user', ['id' => 1, 'contaoIdRemoteId' => '01a03400-d132-7321-92e0-8c2d0ccaa420']),
             VoterInterface::ACCESS_ABSTAIN,
@@ -88,6 +98,38 @@ class ContaoIdUserVoterTest extends TestCase
             new DeleteAction('tl_user', ['id' => 1, 'contaoIdRemoteId' => '01a03400-d132-7321-92e0-8c2d0ccaa420']),
             VoterInterface::ACCESS_ABSTAIN,
         ];
+    }
+
+    #[DataProvider('managedFieldProvider')]
+    public function testDeniesManagedFieldsOnContaoIdUsersOnly(string $field): void
+    {
+        $voter = new ContaoIdUserVoter();
+        $token = $this->createMock(TokenInterface::class);
+
+        $this->assertSame(
+            VoterInterface::ACCESS_DENIED,
+            $voter->vote(
+                $token,
+                new UpdateAction('tl_user', ['id' => 1, 'contaoIdRemoteId' => '01a03400-d132-7321-92e0-8c2d0ccaa420'], [$field => '1']),
+                ['contao_dc.tl_user'],
+            ),
+        );
+
+        $this->assertSame(
+            VoterInterface::ACCESS_ABSTAIN,
+            $voter->vote(
+                $token,
+                new UpdateAction('tl_user', ['id' => 1, 'contaoIdRemoteId' => ''], [$field => '1']),
+                ['contao_dc.tl_user'],
+            ),
+        );
+    }
+
+    public static function managedFieldProvider(): iterable
+    {
+        foreach (['username', 'email', 'password', 'pwChange', 'admin', 'disable', 'start', 'stop', 'contaoIdRemoteId'] as $field) {
+            yield $field => [$field];
+        }
     }
 
     public function testAbstainsOnOtherTables(): void

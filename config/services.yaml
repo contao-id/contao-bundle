@@ -15,8 +15,8 @@ services:
         tags:
             - { name: contao.hook, hook: parseBackendTemplate, priority: 0 }
 
-    contao_id_contao.event_listener.hide_user_form_field_listener:
-        class: ContaoId\ContaoBundle\EventListener\HideUserFormFieldListener
+    contao_id_contao.event_listener.hide_user_fields_listener:
+        class: ContaoId\ContaoBundle\EventListener\HideUserFieldsListener
         arguments:
             - '@request_stack'
             - '@contao.framework'
