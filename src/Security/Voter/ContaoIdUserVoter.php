@@ -30,8 +30,24 @@ class ContaoIdUserVoter extends AbstractDataContainerVoter
         }
 
         if ($action instanceof UpdateAction) {
-            return !\array_key_exists('disable', $action->getNew() ?? [])
-                || !$this->isContaoIdUser($action->getCurrent());
+            if (!$this->isContaoIdUser($action->getCurrent())) {
+                return true;
+            }
+
+            return [] === array_intersect(
+                [
+                    'username',
+                    'email',
+                    'password',
+                    'pwChange',
+                    'admin',
+                    'disable',
+                    'start',
+                    'stop',
+                    'contaoIdRemoteId',
+                ],
+                array_keys($action->getNew() ?? [])
+            );
         }
 
         return true;
