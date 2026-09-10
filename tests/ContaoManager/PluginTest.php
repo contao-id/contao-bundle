@@ -15,6 +15,7 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\Config\Loader\LoaderResolverInterface;
 use Symfony\Component\HttpKernel\KernelInterface;
+use Symfony\Component\Yaml\Yaml;
 
 class PluginTest extends TestCase
 {
@@ -42,6 +43,13 @@ class PluginTest extends TestCase
         ;
 
         $plugin->registerContainerConfiguration($loader, []);
+    }
+
+    public function testEnablesCsrfStateValidationForTheResourceOwner(): void
+    {
+        $config = Yaml::parseFile(__DIR__ . '/../../config/hwi_oauth.yaml');
+
+        self::assertTrue($config['hwi_oauth']['resource_owners']['contao_id']['options']['csrf']);
     }
 
     public function testGetsTheExtensionConfig(): void
