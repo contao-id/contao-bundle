@@ -8,6 +8,7 @@ use Contao\BackendUser;
 use Contao\CoreBundle\ContaoCoreBundle;
 use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\User;
+use ContaoId\ContaoBundle\ContaoIdUser;
 use Doctrine\DBAL\ArrayParameterType;
 use Doctrine\DBAL\Connection;
 use HWI\Bundle\OAuthBundle\OAuth\Response\UserResponseInterface;
@@ -105,7 +106,7 @@ class UserProvider implements UserProviderInterface, OAuthAwareUserProviderInter
                 'tstamp' => time(),
                 'lastLogin' => time(),
                 'currentLogin' => time(),
-                'contaoIdRemoteId' => $data['id'],
+                ContaoIdUser::REMOTE_ID_FIELD => $data['id'],
             ]);
 
             $id = $this->connection->lastInsertId();
@@ -122,7 +123,7 @@ class UserProvider implements UserProviderInterface, OAuthAwareUserProviderInter
                 'tstamp' => time(),
                 'lastLogin' => time(),
                 'currentLogin' => time(),
-                'contaoIdRemoteId' => $data['id'],
+                ContaoIdUser::REMOTE_ID_FIELD => $data['id'],
             ], [
                 'id' => $id,
             ]);
@@ -137,7 +138,7 @@ class UserProvider implements UserProviderInterface, OAuthAwareUserProviderInter
         // Delete contao.id users that do not have access anymore
         // $clientUsers should have at least one entry, since we were authenticated successfully, double check it anyway
         if (\count($clientUsers) > 0) {
-            $this->connection->executeQuery('DELETE FROM tl_user WHERE contaoIdRemoteId <> "" AND contaoIdRemoteId NOT IN (:clientUsers) ', [
+            $this->connection->executeQuery(\sprintf('DELETE FROM tl_user WHERE %1$s <> "" AND %1$s NOT IN (:clientUsers)', ContaoIdUser::REMOTE_ID_FIELD), [
                 'clientUsers' => $clientUsers,
             ], [
                 'clientUsers' => ArrayParameterType::STRING,
