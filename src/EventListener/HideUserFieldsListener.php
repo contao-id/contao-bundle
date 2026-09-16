@@ -8,7 +8,7 @@ use Contao\CoreBundle\DataContainer\PaletteManipulator;
 use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\DataContainer;
 use Contao\UserModel;
-use ContaoId\ContaoBundle\ContaoIdUser;
+use ContaoId\ContaoBundle\Model\ContaoIdUserField;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 class HideUserFieldsListener
@@ -25,10 +25,10 @@ class HideUserFieldsListener
             return;
         }
 
-        $readonly = ['username', 'name', 'email'];
-        $disabled = ['groups'];
+        $readonly = [ContaoIdUserField::Username, ContaoIdUserField::Name, ContaoIdUserField::Email];
+        $disabled = [ContaoIdUserField::Groups];
 
-        $hiddenFields = array_diff(ContaoIdUser::MANAGED_FIELDS, $readonly, $disabled);
+        $hiddenFields = ContaoIdUserField::values([...$readonly, ...$disabled]);
 
         // @phpstan-ignore foreach.nonIterable, offsetAccess.nonOffsetAccessible, offsetAccess.nonOffsetAccessible
         foreach ($GLOBALS['TL_DCA']['tl_user']['palettes'] as $palette => $fields) {
@@ -41,12 +41,12 @@ class HideUserFieldsListener
 
         foreach ($readonly as $field) {
             // @phpstan-ignore-next-line
-            $GLOBALS['TL_DCA']['tl_user']['fields'][$field]['eval']['readonly'] = true;
+            $GLOBALS['TL_DCA']['tl_user']['fields'][$field->value]['eval']['readonly'] = true;
         }
 
         foreach ($disabled as $field) {
             // @phpstan-ignore-next-line
-            $GLOBALS['TL_DCA']['tl_user']['fields'][$field]['eval']['disabled'] = true;
+            $GLOBALS['TL_DCA']['tl_user']['fields'][$field->value]['eval']['disabled'] = true;
         }
     }
 
@@ -66,7 +66,7 @@ class HideUserFieldsListener
         }
 
         foreach ($users as $user) {
-            if ($user->{ContaoIdUser::REMOTE_ID_FIELD}) {
+            if ($user->{ContaoIdUserField::RemoteId->value}) {
                 return true;
             }
         }

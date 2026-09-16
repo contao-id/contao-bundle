@@ -8,7 +8,7 @@ use Contao\CoreBundle\ContaoCoreBundle;
 use Contao\CoreBundle\DataContainer\RecordLabel;
 use Contao\DataContainer;
 use Contao\System;
-use ContaoId\ContaoBundle\ContaoIdUser;
+use ContaoId\ContaoBundle\Model\ContaoIdUserField;
 use Twig\Environment;
 
 class UserIconListener
@@ -28,7 +28,7 @@ class UserIconListener
         /** @var array|RecordLabel $newLabels */ // @phpstan-ignore class.notFound
         $newLabels = $tlUser->addIcon($row, $label, $dataContainer, $labels);
 
-        if (!($row[ContaoIdUser::REMOTE_ID_FIELD] ?? null)) {
+        if (!($row[ContaoIdUserField::RemoteId->value] ?? null)) {
             return $newLabels;
         }
 
