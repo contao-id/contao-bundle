@@ -9,6 +9,7 @@ use Contao\CoreBundle\Security\DataContainer\DeleteAction;
 use Contao\CoreBundle\Security\DataContainer\ReadAction;
 use Contao\CoreBundle\Security\DataContainer\UpdateAction;
 use Contao\CoreBundle\Security\Voter\DataContainer\AbstractDataContainerVoter;
+use ContaoId\ContaoBundle\Model\ContaoIdUserField;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
 class ContaoIdUserVoter extends AbstractDataContainerVoter
@@ -34,20 +35,7 @@ class ContaoIdUserVoter extends AbstractDataContainerVoter
                 return true;
             }
 
-            return [] === array_intersect(
-                [
-                    'username',
-                    'email',
-                    'password',
-                    'pwChange',
-                    'admin',
-                    'disable',
-                    'start',
-                    'stop',
-                    'contaoIdRemoteId',
-                ],
-                array_keys($action->getNew() ?? [])
-            );
+            return [] === array_intersect(ContaoIdUserField::values(), array_keys($action->getNew() ?? []));
         }
 
         return true;
@@ -55,7 +43,7 @@ class ContaoIdUserVoter extends AbstractDataContainerVoter
 
     private function isContaoIdUser(?array $record): bool
     {
-        $remoteId = $record['contaoIdRemoteId'] ?? null;
+        $remoteId = $record[ContaoIdUserField::RemoteId->value] ?? null;
 
         return \is_string($remoteId) && '' !== $remoteId;
     }
