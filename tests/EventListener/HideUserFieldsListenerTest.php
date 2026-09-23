@@ -36,6 +36,7 @@ class HideUserFieldsListenerTest extends TestCase
                 'username' => ['eval' => []],
                 'name' => ['eval' => []],
                 'email' => ['eval' => []],
+                'groups' => ['eval' => ['multiple' => true]],
             ],
         ];
     }
@@ -84,6 +85,7 @@ class HideUserFieldsListenerTest extends TestCase
 
         $this->assertSame(self::PALETTE, $GLOBALS['TL_DCA']['tl_user']['palettes']['default']);
         $this->assertArrayNotHasKey('readonly', $GLOBALS['TL_DCA']['tl_user']['fields']['email']['eval']);
+        $this->assertArrayNotHasKey('disabled', $GLOBALS['TL_DCA']['tl_user']['fields']['groups']['eval']);
     }
 
     public function testDoesNothingWithoutASessionInTheMassEditViews(): void
@@ -133,6 +135,11 @@ class HideUserFieldsListenerTest extends TestCase
                 \sprintf('"%s" must be read-only (%s)', $field, $context),
             );
         }
+
+        $this->assertTrue(
+            $GLOBALS['TL_DCA']['tl_user']['fields']['groups']['eval']['disabled'],
+            \sprintf('"groups" must be disabled (%s)', $context),
+        );
     }
 
     private function mockRequestStack(array $query, ?array $sessionIds = null): RequestStack

@@ -2,12 +2,13 @@
 
 declare(strict_types=1);
 
+use ContaoId\ContaoBundle\Model\ContaoIdUserField;
 use Doctrine\DBAL\Types\Types;
 
 $GLOBALS['TL_DCA']['tl_user']['fields'] = [
     ...$GLOBALS['TL_DCA']['tl_user']['fields'],
     ...[
-        'contaoIdRemoteId' => [
+        ContaoIdUserField::RemoteId->value => [
             'exclude' => true,
             'eval' => [
                 'doNotShow' => true,

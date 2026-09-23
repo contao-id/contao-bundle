@@ -74,8 +74,18 @@ class ContaoIdUserVoterTest extends TestCase
             VoterInterface::ACCESS_ABSTAIN,
         ];
 
-        yield 'updating other fields of a contao.id user is allowed' => [
+        yield 'renaming a contao.id user is denied' => [
             new UpdateAction('tl_user', ['id' => 1, 'contaoIdRemoteId' => '01a03400-d132-7321-92e0-8c2d0ccaa420'], ['name' => 'Rick']),
+            VoterInterface::ACCESS_DENIED,
+        ];
+
+        yield 'regrouping a contao.id user is denied' => [
+            new UpdateAction('tl_user', ['id' => 1, 'contaoIdRemoteId' => '01a03400-d132-7321-92e0-8c2d0ccaa420'], ['groups' => serialize(['2', '3'])]),
+            VoterInterface::ACCESS_DENIED,
+        ];
+
+        yield 'regrouping a local user is allowed' => [
+            new UpdateAction('tl_user', ['id' => 1, 'contaoIdRemoteId' => ''], ['groups' => serialize(['2', '3'])]),
             VoterInterface::ACCESS_ABSTAIN,
         ];
 
@@ -127,7 +137,7 @@ class ContaoIdUserVoterTest extends TestCase
 
     public static function managedFieldProvider(): iterable
     {
-        foreach (['username', 'email', 'password', 'pwChange', 'admin', 'disable', 'start', 'stop', 'contaoIdRemoteId'] as $field) {
+        foreach (['username', 'name', 'email', 'groups', 'password', 'pwChange', 'admin', 'disable', 'start', 'stop', 'contaoIdRemoteId'] as $field) {
             yield $field => [$field];
         }
     }
