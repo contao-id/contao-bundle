@@ -27,7 +27,7 @@ class UserProvider implements UserProviderInterface, OAuthAwareUserProviderInter
     public function __construct(
         private readonly ContaoFramework $framework,
         private readonly Connection $connection,
-        private readonly ?LoggerInterface $logger = null,
+        private readonly LoggerInterface $logger,
     ) {
     }
 
@@ -190,7 +190,7 @@ class UserProvider implements UserProviderInterface, OAuthAwareUserProviderInter
         }
 
         if (!\in_array($remoteId, $clientUsers, true)) {
-            $this->logger?->warning(
+            $this->logger->warning(
                 'contao.id response does not list the authenticating user, skipping removal of revoked users',
                 ['contao' => new ContaoContext(__METHOD__, ContaoContext::ERROR)],
             );
@@ -209,7 +209,7 @@ class UserProvider implements UserProviderInterface, OAuthAwareUserProviderInter
 
             $username = \is_string($revokedUser['username']) ? $revokedUser['username'] : '';
 
-            $this->logger?->info(
+            $this->logger->info(
                 \sprintf('User "%s" was deleted because they no longer have access via contao.id', $username),
                 ['contao' => new ContaoContext(__METHOD__, ContaoContext::ACCESS, $username)],
             );

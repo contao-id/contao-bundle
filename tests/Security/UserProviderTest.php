@@ -138,28 +138,17 @@ class UserProviderTest extends TestCase
         $this->loadUser($connection, $logger, ['01a03400-d132-7321-92e0-8c2d0ccaa420']);
     }
 
-    public function testWorksWithoutLogger(): void
-    {
-        $connection = $this->mockConnection([['id' => 2, 'username' => 'rick@example.com']]);
-        $connection
-            ->expects($this->once())
-            ->method('delete')
-            ->with('tl_user', ['id' => 2])
-        ;
-
-        $this->assertInstanceOf(BackendUser::class, $this->loadUser($connection, null, ['01a03400-d132-7321-92e0-8c2d0ccaa420']));
-    }
-
     public function testThrowsIfTheUserRecordIsMissing(): void
     {
         $connection = $this->mockConnection([], false);
+        $logger = $this->createMock(LoggerInterface::class);
 
         $this->expectException(UserNotFoundException::class);
 
-        $this->loadUser($connection, null, ['01a03400-d132-7321-92e0-8c2d0ccaa420']);
+        $this->loadUser($connection, $logger, ['01a03400-d132-7321-92e0-8c2d0ccaa420']);
     }
 
-    private function loadUser(Connection $connection, ?LoggerInterface $logger, array $clientUsers): UserInterface
+    private function loadUser(Connection $connection, LoggerInterface $logger, array $clientUsers): UserInterface
     {
         $userProvider = new UserProvider($this->mockFramework(), $connection, $logger);
 
