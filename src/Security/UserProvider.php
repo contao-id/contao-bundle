@@ -7,12 +7,14 @@ namespace ContaoId\ContaoBundle\Security;
 use Contao\BackendUser;
 use Contao\CoreBundle\ContaoCoreBundle;
 use Contao\CoreBundle\Framework\ContaoFramework;
+use Contao\CoreBundle\Monolog\ContaoContext;
 use Contao\User;
 use ContaoId\ContaoBundle\Model\ContaoIdUserField;
 use Doctrine\DBAL\ArrayParameterType;
 use Doctrine\DBAL\Connection;
 use HWI\Bundle\OAuthBundle\OAuth\Response\UserResponseInterface;
 use HWI\Bundle\OAuthBundle\Security\Core\User\OAuthAwareUserProviderInterface;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Security\Core\Exception\UserNotFoundException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
@@ -25,6 +27,7 @@ class UserProvider implements UserProviderInterface, OAuthAwareUserProviderInter
     public function __construct(
         private readonly ContaoFramework $framework,
         private readonly Connection $connection,
+        private readonly ?LoggerInterface $logger = null,
     ) {
     }
 
@@ -136,21 +139,17 @@ class UserProvider implements UserProviderInterface, OAuthAwareUserProviderInter
         ]);
 
         // Delete contao.id users that do not have access anymore
-        // $clientUsers should have at least one entry, since we were authenticated successfully, double check it anyway
-        if (\count($clientUsers) > 0) {
-            $this->connection->executeQuery(\sprintf('DELETE FROM tl_user WHERE %1$s <> "" AND %1$s NOT IN (:clientUsers)', ContaoIdUserField::RemoteId->value), [
-                'clientUsers' => $clientUsers,
-            ], [
-                'clientUsers' => ArrayParameterType::STRING,
-            ]);
-        }
+        $this->removeRevokedUsers(\is_scalar($data['id']) ? (string) $data['id'] : '', $clientUsers);
 
         $statement = $this->connection->executeQuery('SELECT username FROM tl_user WHERE id = :id', [
             'id' => $id,
         ]);
 
-        /** @var string $username */
         $username = $statement->fetchOne();
+
+        if (!\is_string($username)) {
+            throw new UserNotFoundException('User not found');
+        }
 
         return $this->loadUserByIdentifier($username);
     }
@@ -173,5 +172,47 @@ class UserProvider implements UserProviderInterface, OAuthAwareUserProviderInter
     public function supportsClass(string $class): bool
     {
         return BackendUser::class === $class;
+    }
+
+    private function removeRevokedUsers(string $remoteId, array $clientUsers): void
+    {
+        // Remove empty string IDs
+        $clientUsers = array_values(
+            array_filter(
+                $clientUsers,
+                static fn (mixed $clientUser): bool => \is_string($clientUser) && '' !== $clientUser,
+            )
+        );
+
+        // $clientUsers should have at least one entry, since we were authenticated successfully, double check it anyway
+        if (0 === \count($clientUsers)) {
+            return;
+        }
+
+        if (!\in_array($remoteId, $clientUsers, true)) {
+            $this->logger?->warning(
+                'contao.id response does not list the authenticating user, skipping removal of revoked users',
+                ['contao' => new ContaoContext(__METHOD__, ContaoContext::ERROR)],
+            );
+
+            return;
+        }
+
+        $revokedUsers = $this->connection->fetchAllAssociative(
+            \sprintf('SELECT id, username FROM tl_user WHERE %1$s <> "" AND %1$s NOT IN (:clientUsers)', ContaoIdUserField::RemoteId->value),
+            ['clientUsers' => $clientUsers],
+            ['clientUsers' => ArrayParameterType::STRING],
+        );
+
+        foreach ($revokedUsers as $revokedUser) {
+            $this->connection->delete('tl_user', ['id' => $revokedUser['id']]);
+
+            $username = \is_string($revokedUser['username']) ? $revokedUser['username'] : '';
+
+            $this->logger?->info(
+                \sprintf('User "%s" was deleted because they no longer have access via contao.id', $username),
+                ['contao' => new ContaoContext(__METHOD__, ContaoContext::ACCESS, $username)],
+            );
+        }
     }
 }
