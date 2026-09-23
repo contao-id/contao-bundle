@@ -114,6 +114,11 @@ class UserProvider implements UserProviderInterface, OAuthAwareUserProviderInter
 
             $id = $this->connection->lastInsertId();
 
+            $this->logger->info(
+                \sprintf('User "%s" was newly added via contao.id.', $mail),
+                ['contao' => new ContaoContext(__METHOD__, ContaoContext::ACCESS, $mail)],
+            );
+
             if (version_compare(ContaoCoreBundle::getVersion(), '6.0.0', '<')) {
                 $this->connection->update('tl_user', ['backendTheme' => 'flexible'], ['id' => $id]);
             }
@@ -131,6 +136,11 @@ class UserProvider implements UserProviderInterface, OAuthAwareUserProviderInter
                 'id' => $id,
             ]);
         }
+
+        $this->logger->info(
+            \sprintf('User "%s" has logged in via contao.id.', $mail),
+            ['contao' => new ContaoContext(__METHOD__, ContaoContext::ACCESS, $mail)],
+        );
 
         // Update groups
         $this->connection->executeQuery('UPDATE tl_user SET `groups` = :groups WHERE id = :id', [
@@ -191,7 +201,7 @@ class UserProvider implements UserProviderInterface, OAuthAwareUserProviderInter
 
         if (!\in_array($remoteId, $clientUsers, true)) {
             $this->logger->warning(
-                'contao.id response does not list the authenticating user, skipping removal of revoked users',
+                'contao.id response does not list the authenticating user, skipping removal of revoked users.',
                 ['contao' => new ContaoContext(__METHOD__, ContaoContext::ERROR)],
             );
 
@@ -210,7 +220,7 @@ class UserProvider implements UserProviderInterface, OAuthAwareUserProviderInter
             $username = \is_string($revokedUser['username']) ? $revokedUser['username'] : '';
 
             $this->logger->info(
-                \sprintf('User "%s" was deleted because they no longer have access via contao.id', $username),
+                \sprintf('User "%s" was deleted because they no longer have access via contao.id.', $username),
                 ['contao' => new ContaoContext(__METHOD__, ContaoContext::ACCESS, $username)],
             );
         }

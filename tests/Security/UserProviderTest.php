@@ -44,7 +44,7 @@ class UserProviderTest extends TestCase
         $logger = $this->createMock(LoggerInterface::class);
         $logger->expects($this->never())->method('warning');
         $logger
-            ->expects($this->exactly(2))
+            ->expects($this->exactly(3))
             ->method('info')
             ->willReturnCallback(static function (string $message, array $context) use (&$messages): void {
                 $messages[] = [$message, $context['contao']->getAction(), $context['contao']->getUsername()];
@@ -56,8 +56,9 @@ class UserProviderTest extends TestCase
         $this->assertSame([['tl_user', ['id' => 2]], ['tl_user', ['id' => 3]]], $deleted);
         $this->assertSame(
             [
-                ['User "rick@example.com" was deleted because they no longer have access via contao.id', ContaoContext::ACCESS, 'rick@example.com'],
-                ['User "astley@example.com" was deleted because they no longer have access via contao.id', ContaoContext::ACCESS, 'astley@example.com'],
+                ['User "rick@example.com" has logged in via contao.id.', ContaoContext::ACCESS, 'rick@example.com'],
+                ['User "rick@example.com" was deleted because they no longer have access via contao.id.', ContaoContext::ACCESS, 'rick@example.com'],
+                ['User "astley@example.com" was deleted because they no longer have access via contao.id.', ContaoContext::ACCESS, 'astley@example.com'],
             ],
             $messages,
         );
@@ -78,15 +79,16 @@ class UserProviderTest extends TestCase
 
         $logger = $this->createMock(LoggerInterface::class);
         $logger
-            ->expects($this->never())
+            ->expects($this->once())
             ->method('info')
+            ->with('User "rick@example.com" has logged in via contao.id.', ['contao' => new ContaoContext('ContaoId\ContaoBundle\Security\UserProvider::loadUserByOAuthUserResponse', ContaoContext::ACCESS, 'rick@example.com')])
         ;
 
         $logger
             ->expects($this->once())
             ->method('warning')
             ->with(
-                'contao.id response does not list the authenticating user, skipping removal of revoked users',
+                'contao.id response does not list the authenticating user, skipping removal of revoked users.',
                 $this->callback(static fn (array $context): bool => ContaoContext::ERROR === $context['contao']->getAction()),
             )
         ;
@@ -109,8 +111,14 @@ class UserProviderTest extends TestCase
 
         $logger = $this->createMock(LoggerInterface::class);
         $logger
+            ->expects($this->once())
+            ->method('info')
+            ->with('User "rick@example.com" has logged in via contao.id.', ['contao' => new ContaoContext('ContaoId\ContaoBundle\Security\UserProvider::loadUserByOAuthUserResponse', ContaoContext::ACCESS, 'rick@example.com')])
+        ;
+
+        $logger
             ->expects($this->never())
-            ->method($this->anything())
+            ->method('warning')
         ;
 
         $this->loadUser($connection, $logger, []);
@@ -131,8 +139,14 @@ class UserProviderTest extends TestCase
 
         $logger = $this->createMock(LoggerInterface::class);
         $logger
+            ->expects($this->once())
+            ->method('info')
+            ->with('User "rick@example.com" has logged in via contao.id.', ['contao' => new ContaoContext('ContaoId\ContaoBundle\Security\UserProvider::loadUserByOAuthUserResponse', ContaoContext::ACCESS, 'rick@example.com')])
+        ;
+
+        $logger
             ->expects($this->never())
-            ->method($this->anything())
+            ->method('warning')
         ;
 
         $this->loadUser($connection, $logger, ['01a03400-d132-7321-92e0-8c2d0ccaa420']);
