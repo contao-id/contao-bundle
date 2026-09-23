@@ -60,6 +60,7 @@ services:
         arguments:
             - '@contao.framework'
             - '@doctrine.dbal.default_connection'
+            - '@monolog.logger.contao.access'
 
     # Alias for BC
     ContaoId\ContaoBundle\Security\UserProvider: '@contao_id_contao.security.user_provider'

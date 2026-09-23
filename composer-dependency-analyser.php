@@ -9,6 +9,7 @@ return (new Configuration())
     ->ignoreUnknownClasses([
         'Contao\CoreBundle\DataContainer\RecordLabel', // TODO: Remove me when dropping Contao 5 support
         'PHPUnit\Framework\Attributes\DataProvider',
+        'PHPUnit\Framework\MockObject\MockObject',
         'PHPUnit\Framework\TestCase',
     ])
     ->ignoreErrorsOnPackage('symfony/security-bundle', [ErrorType::UNUSED_DEPENDENCY])
