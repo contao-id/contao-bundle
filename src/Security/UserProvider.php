@@ -85,12 +85,21 @@ class UserProvider implements UserProviderInterface, OAuthAwareUserProviderInter
             $groups[] = $groupId;
         }
 
-        // Check if user exists
-        $statement = $this->connection->executeQuery('SELECT id FROM tl_user WHERE email = :email', [
-            'email' => $mail,
+        // Check if a contao.id user exists
+        $statement = $this->connection->executeQuery(\sprintf('SELECT id FROM tl_user WHERE %s = :remoteId', ContaoIdUserField::RemoteId->value), [
+            'remoteId' => $data['id'],
         ]);
 
         $id = $statement->fetchOne();
+
+        if (false === $id) {
+            // Check if a local user with this e-mail exists that is not linked to contao.id yet
+            $statement = $this->connection->executeQuery(\sprintf('SELECT id FROM tl_user WHERE email = :email AND %s = \'\'', ContaoIdUserField::RemoteId->value), [
+                'email' => $mail,
+            ]);
+
+            $id = $statement->fetchOne();
+        }
 
         // User not found, create one
         if (false === $id) {
@@ -209,7 +218,7 @@ class UserProvider implements UserProviderInterface, OAuthAwareUserProviderInter
         }
 
         $revokedUsers = $this->connection->fetchAllAssociative(
-            \sprintf('SELECT id, username FROM tl_user WHERE %1$s <> "" AND %1$s NOT IN (:clientUsers)', ContaoIdUserField::RemoteId->value),
+            \sprintf('SELECT id, username FROM tl_user WHERE %1$s <> \'\' AND %1$s NOT IN (:clientUsers)', ContaoIdUserField::RemoteId->value),
             ['clientUsers' => $clientUsers],
             ['clientUsers' => ArrayParameterType::STRING],
         );
