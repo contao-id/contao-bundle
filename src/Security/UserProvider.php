@@ -129,7 +129,11 @@ class UserProvider implements UserProviderInterface, OAuthAwareUserProviderInter
             );
 
             if (version_compare(ContaoCoreBundle::getVersion(), '6.0.0', '<')) {
-                $this->connection->update('tl_user', ['backendTheme' => 'flexible'], ['id' => $id]);
+                try {
+                    $this->connection->update('tl_user', ['backendTheme' => 'flexible'], ['id' => $id]);
+                } catch (\Exception $e) {
+                    // noop
+                }
             }
         } else {
             $this->connection->update('tl_user', [
